@@ -2,7 +2,7 @@
 layout: post
 title:  "Notable containers"
 date:   2014-11-29 00:31:37
-categories: docker containers
+categories: docker
 ---
 While getting familiar with different ways of using Docker I have bumped
 into a few pretty useful containers.

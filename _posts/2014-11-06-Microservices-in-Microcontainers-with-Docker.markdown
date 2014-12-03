@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Microservices in Microcontainers with Docker"
-categories: docker containers microservices microcontainers
+categories: docker
 ---
 
 This article was originally published on [DZone](http://architects.dzone.com/articles/microservices-microcontainers).

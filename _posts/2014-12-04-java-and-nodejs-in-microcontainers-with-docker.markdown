@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Java and Node.js in Microcontainers with Docker"
-categories: docker containers microservices microcontainers java node.js
+categories: docker
 ---
 
 This article was also published in [DZone](http://www.dzone.com/articles/java-and-node-microcontainers).
