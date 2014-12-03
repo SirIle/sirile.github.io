@@ -22,7 +22,7 @@ The concept is built in three parts:
 
 This image shows how the application containers are built by extending containers. It also shows which fileboxes are needed for the application containers to work and which ports are exposed.
 
-![Fileboxes_and_Containers](/images/Fileboxes_and_Containers.png)
+![Fileboxes_and_Containers](/images/Fileboxes_and_containers.png)
 
 Corresponding docker.io trusted builds have been made so trying out the examples doesn't require local building. The filebox volume containers need to be created locally.
 
