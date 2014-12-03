@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "Microservices in Microcontainers with Docker"
-date:   2014-11-06 15:31:37
 categories: docker containers microservices microcontainers
 ---
 
