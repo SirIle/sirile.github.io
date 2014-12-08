@@ -4,7 +4,7 @@ title:  "Java and Node.js in Microcontainers with Docker"
 categories: docker
 ---
 
-This article was also published in [DZone](http://www.dzone.com/articles/java-and-node-microcontainers).
+This article was also published in [DZone](http://java.dzone.com/articles/java-and-node-microcontainers).
 
 In the [first article]({% post_url 2014-11-06-Microservices-in-Microcontainers-with-Docker %}) I presented a way to create Microcontainers which use volume containers to share runtimes and executables so that the actual application containers can be kept small. The containers are based on BusyBox ([progrium/busybox](https://github.com/progrium/busybox)) and necessary libraries are symbolically linked so that the executables work in the very light environment.
 
