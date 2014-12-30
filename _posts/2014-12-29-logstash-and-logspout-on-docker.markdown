@@ -57,8 +57,14 @@ when exposing ports to the host. Instead it needs to be manually specified with 
 
 After adding the parameter the logging system began to work as expected.
 
+Another issue I faced were a lot of parsing failures for the log messages. It was caused by Logspout
+using ISO 8601 as the date format whereas the older rsyslog based parsing expected syslog format. 
+After modifying the parser the _grokparsefailures stopped and the messages were properly handled.
+
 ## Conclusion
 
 Separating logging using Logspout to direct the logs to Logstash and Elasticsearch works pretty well.
-A major problem is that almost nothing seems to log in a compatible syslog format, so a lot
-of custom parsing needs to be added to the Logstash side.
+One issue is that a lot of the programs log in a non-syslog friendly way by for example indenting the
+log messages. Parsing a Java stacktrace from multiple messages can be painful and requires further
+investigation. With rsyslog the messages can be combined before sending, but logspout forwards
+the messages as they appear, so that is not an option.
