@@ -103,7 +103,7 @@ the resulting image is
 
 {% highlight docker %}
 REPOSITORY             TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
-sirile/testjava        latest              5e0d93d4a5c0        3 seconds ago       175.9 MB
+sirile/testjava        latest              5e0d93d4a5c0        24 hours ago        175.9 MB
 {% endhighlight %}
 
 and when inspected with `docker history` it looks like
