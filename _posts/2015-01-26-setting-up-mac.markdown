@@ -43,6 +43,13 @@ echo "/usr/local/bin/bash" | sudo tee -a /etc/shells
 chsh -s /usr/local/bin/bash
 {% endhighlight %}
 
+## Install NPM as non-root
+
+{% highlight bash %}
+echo prefix=~/.node >> ~/.npmrc
+curl -L https://www.npmjs.org/install.sh | sh
+{% endhighlight %}
+
 ## Add a ~/.extra to contain non-github stuff
 
 {% highlight bash %}
