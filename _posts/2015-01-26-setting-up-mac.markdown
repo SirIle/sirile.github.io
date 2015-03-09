@@ -12,8 +12,10 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 
 ## Install brewdler
 
+Updated on 9.3.2015
+
 {% highlight bash %}
-sudo gem install brewdler
+brew tap Homebrew/brewdler
 {% endhighlight %}
 
 ## Clone dotfiles
@@ -26,7 +28,7 @@ git clone https://github.com/SirIle/dotfiles.git ~/.dotfiles
 
 {% highlight bash %}
 cd .dotfiles
-brewdle install
+brew brewdle
 {% endhighlight %}
 
 ## Run RCM
