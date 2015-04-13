@@ -3,6 +3,10 @@ layout: post
 title:  "Spring Boot with Scala on Docker using Gradle"
 ---
 
+* toc
+{:toc}
+{:.toc}
+
 ## General
 
 I started experimenting with building containers using Gradle as part of a development cycle with minimum duration feedback cycle and maximum portability for Microservices. I'll write a bit more about that later, but thought that documenting this process of creating and publishing a container would be useful.

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Java 8 JRE minicontainer with BusyBox on Docker"
+commentIssueId: 1
 ---
 
 *<b>Update on 31.3.2015</b> Updated the Java version to 1.8.0_40.*
