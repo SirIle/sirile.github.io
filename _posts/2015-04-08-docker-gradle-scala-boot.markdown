@@ -3,9 +3,13 @@ layout: post
 title:  "Spring Boot with Scala on Docker using Gradle"
 ---
 
+{::options parse_block_html="true" /}
+<div class="toc">
+Contents
+
 * toc
 {:toc}
-{:.toc}
+</div>
 
 ## General
 
