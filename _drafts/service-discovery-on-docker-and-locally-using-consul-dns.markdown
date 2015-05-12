@@ -17,7 +17,7 @@ Contents
 
 Using DNS for service discovery is extremely simple. It is well suited to finding ..
 
-This article describes how ...
+This article describes how to set up an environment where the local development environment can seamlessly connect to services running in containers which can be located either locally or in the cloud.
 
 _Insert picture here_
 
@@ -59,13 +59,22 @@ This leads me to favor option 1 and setting up Consul locally. I'm using Mac wit
 
 ### Prerequisites
 
-- Docker Machine
-- Docker client
-- VirtualBox
+Following tools should be installed to make development easier. The versions I used are in the brackets.
+
+- Docker Machine (0.2.0)
+- Docker client (1.6)
+- VirtualBox (4.3.26)
+
+On OS X side I used brew and brew cask to install the packages, in Windows I just downloaded the installation packets and installed manually.
 
 ### Starting the node
 
 - Create the Docker Machine node
+
+{% highlight bash %}
+docker-machine create -d virtualbox dev
+{% endhighlight %}
+
 - Start Consul
 
 {% highlight bash %}
@@ -78,11 +87,19 @@ docker run --name consul -d -h dev -p `docker-machine ip`:8300:8300 -p `docker-m
 docker run -d -v /var/run/docker.sock:/tmp/docker.sock -h dev gliderlabs/registrator consul://`docker-machine ip`:8500
 {% endhighlight %}
 
-- (Start the WS HAProxy)
+- Start the WS HAProxy
+
+{% highlight bash %}
+docker run -d -e SERVICE_NAME=rest --dns 172.17.42.1 -p 80:80 sirile/haproxy
+{% endhighlight %}
+
+consul-template -config=/tmp/haproxy.json -dry -once
+haproxy -f /etc/haproxy/haproxy.cfg
+
 - Start the service(s)
 
 {% highlight bash %}
-docker run -d -e SERVICE_NAME=hello -p 80:80 -h hello1 --name hello1 sirile/scala-boot-test
+docker run -d -e SERVICE_NAME=hello/v1 -e SERVICE_TAGS=rest -h hello1 --name hello1 -p :80 sirile/scala-boot-test
 {% endhighlight %}
 
 ## Setting up the local side
@@ -91,7 +108,7 @@ docker run -d -e SERVICE_NAME=hello -p 80:80 -h hello1 --name hello1 sirile/scal
 
 - Consul
 
-### Setting up resolve configuration
+### Setting up resolver configuration
 
 Following the [blog](http://passingcuriosity.com/2013/dnsmasq-dev-osx/).
 
@@ -119,3 +136,6 @@ consul agent -server -join `docker-machine ip` -data-dir /tmp/consul
 ## Profit
 
 - Check that ping and browser work as expected
+
+ping rest.service.consul
+curl rest.service.consul/hello/v1
