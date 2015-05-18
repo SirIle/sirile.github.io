@@ -15,7 +15,7 @@ Contents
 
 ## General
 
-As I have been using Docker more I have started going towards simpler, stand alone containers. This align well with the current rise of microservices. To effectively use microservices, an easy mechanism for service registration and discovery is needed so that the benefits of easy scaling can be realized.
+As I have been using Docker more I have started going towards simpler, stand alone containers. This aligns well with the current rise of microservices. To effectively use microservices a mechanism for service registration and discovery is needed so that the benefits of easy scaling can be realized.
 
 I try to keep things as portable as possible, so no proprietary tools are used. I leverage heavily the excellent work done by Jeff Lindsay ([progrium](http://progrium.com/blog/)).
 
@@ -62,12 +62,13 @@ This file is used to build the image. It's based on BusyBox, which results in a 
 FROM progrium/busybox
 MAINTAINER Ilkka Anttonen version: 0.1
 
-# Updata wget to get support for SSL
+# Update wget to get support for SSL
 RUN opkg-install haproxy wget
 
 # Download consul-template
 RUN ( wget  --no-check-certificate https://github.com/hashicorp/consul-template/releases/download/v0.8.0/consul-template_0.8.0_linux_amd64.tar.gz -O /tmp/consul_template.tar.gz && gunzip /tmp/consul_template.tar.gz && cd /tmp && tar xf /tmp/consul_template.tar && cd /tmp/consul-template* && mv consul-template /usr/bin && rm -rf /tmp/* )
 
+# Copy configuration files to place
 COPY files/haproxy.json /tmp/haproxy.json
 COPY files/haproxy.ctmpl /tmp/haproxy.ctmpl
 
@@ -143,7 +144,7 @@ On lines 19-20 all the services having the tag "rest" defined are looped and an 
 
 On lines 21-22 the same loop is executed again and use_backend configuration is written.
 
-Between lines 24 and 31 the backend configuration is formed.
+Between lines 24 and 31 the backend configuration is formed. Http health checks are defined so that when an existing service is scaled, the requests shouldn't be routed there until it is ready to serve.
 
 This template works with multiple nodes as well as with multiple instances of the same service.
 
