@@ -84,13 +84,13 @@ docker run --name consul -d -h dev -p `docker-machine ip`:8300:8300 -p `docker-m
 - Start Registrator
 
 {% highlight bash %}
-docker run -d -v /var/run/docker.sock:/tmp/docker.sock -h dev gliderlabs/registrator consul://`docker-machine ip`:8500
+docker run -d -v /var/run/docker.sock:/tmp/docker.sock -h registrator --name registrator gliderlabs/registrator consul://`docker-machine ip`:8500
 {% endhighlight %}
 
 - Start the WS HAProxy
 
 {% highlight bash %}
-docker run -d -e SERVICE_NAME=rest --dns 172.17.42.1 -p 80:80 sirile/haproxy
+docker run -d -e SERVICE_NAME=rest --name=rest --dns 172.17.42.1 -p 80:80 -p 1936:1936 sirile/haproxy
 {% endhighlight %}
 
 consul-template -config=/tmp/haproxy.json -dry -once
@@ -101,6 +101,13 @@ haproxy -f /etc/haproxy/haproxy.cfg
 {% highlight bash %}
 docker run -d -e SERVICE_NAME=hello/v1 -e SERVICE_TAGS=rest -h hello1 --name hello1 -p :80 sirile/scala-boot-test
 {% endhighlight %}
+
+For testing the haproxy configuration
+
+{% highlight bash %}
+docker run --dns 172.17.42.1 --rm sirile/haproxy consul-template -config=/tmp/haproxy.json -dry -once
+{% endhighlight %}
+
 
 ## Setting up the local side
 
