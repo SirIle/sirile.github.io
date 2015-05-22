@@ -21,7 +21,9 @@ I try to keep things as portable as possible, so no proprietary tools are used. 
 
 This will start a series of posts where I look at creating a Docker based runtime environment with dynamic service registration and discovery with support for automatic vertical and horizontal scaling. As I'm using Docker Machine, the environment can as easily be a local VirtualBox based one or reside on Amazon Web Services, Google Compute Engine, Microsoft Azure or anywhere Docker Machine supports.
 
-Code for the HAProxy image can be found [here](https://github.com/SirIle/miniboxes). Code for the scala-boot-test which is used as the example application can be found [here](https://github.com/SirIle/scala-boot-test). More information about the scala-boot-test can be found from the [blog post](http://sirile.github.io/2015/04/08/docker-gradle-scala-boot.html).
+### Source code and pre-built images
+
+Code for the HAProxy image can be found [here](https://github.com/SirIle/miniboxes). Code for the scala-boot-test which is used as the example application can be found [here](https://github.com/SirIle/scala-boot-test). More information about the scala-boot-test can be found from this [blog post](http://sirile.github.io/2015/04/08/docker-gradle-scala-boot.html). All Docker images can also be found from Dockerhub, so all the docker commands are runnable and the images are automatically pulled from the central repository.
 
 ### Requirements for discovery mechanism
 
