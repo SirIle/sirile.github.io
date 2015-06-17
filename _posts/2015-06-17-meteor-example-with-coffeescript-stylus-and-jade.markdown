@@ -2,6 +2,7 @@
 layout: post
 title: 'Meteor example with CoffeeScript, Stylus and Jade'
 date: '2015-06-17 13:39'
+commentIssueId: 3
 ---
 
 {::options parse_block_html="true" /}
