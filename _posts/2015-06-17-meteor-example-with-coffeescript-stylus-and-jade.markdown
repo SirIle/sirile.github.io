@@ -19,7 +19,7 @@ I have been checking out [Meteor](https://www.meteor.com) periodically since abo
 
 While playing around with it in the past I've usually used [CoffeeScript](http://coffeescript.org) which is easily done as Meteor has a good package management system and CoffeeScript was a native package. Same goes with [Stylus](https://learnboost.github.io/stylus/). Changing the HTML templating engine used to be harder, but now packages can also be used for that and I like the [Jade](http://jade-lang.com) syntax, which is very concise, better than SpaceBars syntax that is the default for Meteor.
 
-When creating a new app with Meteor, it generates a few basic files which form an example application that is immediately runnable. The application shows a page with a single button and a counter that is increased when the button is pressed. I converted the application to use CoffeeScript for the events and Jade for the HTML templating and added stylus support.
+When creating a new app with Meteor, it generates a few basic files which form an example application that is immediately runnable. The application shows a page with a single button and a counter that is increased when the button is pressed. I converted the application to use CoffeeScript for the events and Jade for the HTML templating and added Stylus support.
 
 ## Creating the application
 
@@ -35,7 +35,7 @@ In that folder are the following files
 - meteortest.html
 - meteortest.js
 
-You can start the example application with running the comman ```meteor``` in that folder. The application can be checked at http://localhost:3000.
+You can start the example application with running the command `meteor` in that folder. The application can be checked at http://localhost:3000.
 
 ## Adding support for CoffeeScript, Jade and Stylus
 
@@ -45,11 +45,11 @@ Using the Meteor package manager is simple and adding the support for the packag
 meteor add coffeescript stylus mquandalle:jade
 {% endhighlight %}
 
-in that folder. The packages that are used can be checked with ```meteor list```.
+in that folder. The packages that are used can be checked with `meteor list`.
 
 ## Taking Jade into use
 
-The original HTML in meteortest.html looks like
+The original HTML in _meteortest.html_ looks like
 
 {% highlight html %}
 <head>
