@@ -168,7 +168,7 @@ eval "$(docker-machine env dev)"
 ### Start Consul
 
 {% highlight bash %}
-docker run --name consul -d -h dev -p `docker-machine ip`:8300:8300 -p `docker-machine ip`:8301:8301 -p `docker-machine ip`:8301:8301/udp -p `docker-machine ip`:8302:8302 -p `docker-machine ip`:8302:8302/udp -p `docker-machine ip`:8400:8400 -p `docker-machine ip`:8500:8500 -p 172.17.42.1:53:53 -p 172.17.42.1:53:53/udp progrium/consul -server -advertise `docker-machine ip` -bootstrap-expect 1
+docker run --name consul -d -h dev -p `docker-machine ip $DOCKER_MACHINE_NAME`:8300:8300 -p `docker-machine ip $DOCKER_MACHINE_NAME`:8301:8301 -p `docker-machine ip $DOCKER_MACHINE_NAME`:8301:8301/udp -p `docker-machine ip $DOCKER_MACHINE_NAME`:8302:8302 -p `docker-machine ip $DOCKER_MACHINE_NAME`:8302:8302/udp -p `docker-machine ip $DOCKER_MACHINE_NAME`:8400:8400 -p `docker-machine ip $DOCKER_MACHINE_NAME`:8500:8500 -p 172.17.42.1:53:53 -p 172.17.42.1:53:53/udp progrium/consul -server -advertise `docker-machine ip $DOCKER_MACHINE_NAME` -bootstrap-expect 1
 {% endhighlight %}
 
 Here the IP address is acquired from the Docker Machine. Consul offers a DNS service on Docker bridge that other containers can use.
@@ -176,7 +176,7 @@ Here the IP address is acquired from the Docker Machine. Consul offers a DNS ser
 ### Start Registrator
 
 {% highlight bash %}
-docker run -d -v /var/run/docker.sock:/tmp/docker.sock -h registrator --name registrator gliderlabs/registrator consul://`docker-machine ip`:8500
+docker run -d -v /var/run/docker.sock:/tmp/docker.sock -h registrator --name registrator gliderlabs/registrator consul://`docker-machine ip $DOCKER_MACHINE_NAME`:8500
 {% endhighlight %}
 
 Registrator is responsible for registering (and de-registering) containers to Consul. It receives signals through the Docker socket, which is exposed to it.
@@ -253,7 +253,7 @@ HAProxy stats can be checked from port 1936, for example http://192.168.99.100:1
 
 ## Testing that things work
 
-Now you should be able to access the hello service from http://192.168.99.100/hello/v1. The correct IP can be checked with `docker-machine ip`.
+Now you should be able to access the hello service from http://192.168.99.100/hello/v1. The correct IP can be checked with `docker-machine ip $DOCKER_MACHINE_NAME`.
 
 Logs can be accessed through Docker with `docker logs rest`.
 
