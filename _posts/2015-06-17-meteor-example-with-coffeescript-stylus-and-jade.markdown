@@ -63,7 +63,7 @@ The original HTML in _meteortest.html_ looks like
 
 <template name="hello">
   <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+  <p>You've pressed the button {% raw %}{{counter}}{% endraw %} times.</p>
 </template>
 {% endhighlight %}
 
