@@ -3,6 +3,12 @@ layout: post
 title: "Logstash and Logspout on Docker"
 ---
 
+## Update 26th June 2015
+
+**A newer version with more recent versions of the components can be found [here]({% post_url 2015-06-26-elasticsearch-logstash-kibana-and-logspout-on-docker %}).**
+
+The old examples may not run properly as the images have been updated with new versions of tools. Especially kibanabox needs to be built by hand as the DockerHub now builds the Kibana 4.1 image.
+
 ## General
 
 When I was using fat containers, I used rsyslog to pass the log messages to a centralized container which had Elasticsearch, Logstash and Kibana installed. This combination is also known as the ELK-stack. After moving towards microcontainers I wanted to separate the logging logic from the application containers. Orchestration is still an issue with using multiple simple containers, but at least the application containers shouldn't need to know anything about the logging architecture as long as they can log to stdout and stderr so that Docker can pick the logs up.
