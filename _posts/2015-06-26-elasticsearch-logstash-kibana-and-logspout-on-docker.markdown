@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Elasticsearch, Logstash, Kibana (ELK-stack) and Logspout on Docker"
+commentIssueId: 4
 ---
 
 {::options parse_block_html="true" /}
