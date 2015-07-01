@@ -2,7 +2,7 @@
 layout: post
 title: Using HAProxy and Consul for dynamic service discovery on Docker
 date: '2015-05-18 14:08'
-commentIssueId: 1
+commentIssueId: 2
 ---
 
 {::options parse_block_html="true" /}
