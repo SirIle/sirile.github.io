@@ -97,7 +97,7 @@ and in a second terminal run (remember to set the environment variables)
 docker run -it --rm --name second busybox
 {% endhighlight %}
 
-now you should with the command ´docker ps -a´ (after setting the environment variables correctly) in a third console see something like
+now you should with the command `docker ps -a` (after setting the environment variables correctly) in a third console see something like
 
 {% highlight bash %}
 CONTAINER ID        IMAGE               COMMAND                CREATED             STATUS              PORTS                                     NAMES
