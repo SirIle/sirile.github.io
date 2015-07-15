@@ -15,7 +15,7 @@ Contents
 
 ## TL;DR
 
-To use boot2docker.iso which includes the 1.8 experimental Docker, create the machine with
+To use boot2docker.iso which includes the 1.8 experimental Docker (at the moment _Docker version 1.8.0-dev, build 8c7cd78, experimental_), create the machine with
 
 {% highlight bash %}
 docker-machine create -d virtualbox --virtualbox-boot2docker-url=http://sirile.github.io/files/boot2docker-1.8.iso dev
@@ -48,7 +48,7 @@ CMD ["cat", "boot2docker.iso"]
 
 It can also be cloned from [GitHub](https://github.com/SirIle/boot2docker-experimental).
 
-After building it on a suitable Docker environment with
+After building it on a suitable Docker environment (2 GB memory seems to be required) with
 
 {% highlight bash %}
 docker build -t my-boot2docker-img .
