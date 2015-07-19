@@ -23,9 +23,10 @@ The idea is that first you create a node for running Consul and then a swarm mas
 
 In this article I follow the steps that are described in Docker's blog and note the differences when running the example locally. I won't be detailing the use of Docker Compose here as it is exactly the same as in the original article.
 
-**Note!** At the time of writing this (15th July 2015) VirtualBox 5.0 doesn't play along with the current docker-machine version (0.3.0). If you have upgraded to VirtualBox 5.0, you need to downgrade to 4.3.28, which (on Mac with brew) can be done with
+**Note!** At the time of writing this (15th July 2015) VirtualBox 5.0 doesn't play along with the current docker-machine version (0.3.0). If you have upgraded to VirtualBox 5.0, you need to downgrade to 4.3.28, which (on Mac with brew using the [caskroom/versions tap](https://github.com/caskroom/homebrew-cask/blob/master/USAGE.md#additional-taps-optional)) can be done with
 
 {% highlight bash %}
+brew tap caskroom/versions
 brew cask uninstall virtualbox
 brew cask install virtualbox4328100309
 {% endhighlight %}
