@@ -13,6 +13,9 @@ Contents
 {:toc}
 </div>
 
+
+**Update on 20th of July 2015!** As the BusyBox image's package manager opkg [doesn't work anymore I have switched to using Alpine instead]({% post_url 2015-07-20-switching-to-alpine-from-busybox %}). The example images and commands have been updated.
+
 ## General
 
 As I have been using Docker more I have started going towards simpler, stand alone containers. This aligns well with the current rise of microservices. To effectively use microservices a mechanism for service registration and discovery is needed so that the benefits of easy scaling can be realized.
@@ -63,16 +66,17 @@ When a container offering a service is started, it is named along with a version
 This file is used to build the image. It's based on BusyBox, which results in a very small footprint. Configuration files are copied to place and consul-template command is executed.
 
 {% highlight dockerfile linenos %}
-FROM progrium/busybox
-MAINTAINER Ilkka Anttonen version: 0.2
+FROM alpine
+MAINTAINER Ilkka Anttonen version: 0.3
 
-# Update wget to get support for SSL
-RUN opkg-install haproxy wget
+ENV CONSUL_TEMPLATE_VERSION=0.10.0
+
+# Updata wget to get support for SSL
+RUN apk --update add haproxy wget
 
 # Download consul-template
-RUN ( wget  --no-check-certificate https://github.com/hashicorp/consul-template/releases/download/v0.10.0/consul-template_0.10.0_linux_amd64.tar.gz -O /tmp/consul_template.tar.gz && gunzip /tmp/consul_template.tar.gz && cd /tmp && tar xf /tmp/consul_template.tar && cd /tmp/consul-template* && mv consul-template /usr/bin && rm -rf /tmp/* )
+RUN ( wget --no-check-certificate https://github.com/hashicorp/consul-template/releases/download/v${CONSUL_TEMPLATE_VERSION}/consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.tar.gz -O /tmp/consul_template.tar.gz && gunzip /tmp/consul_template.tar.gz && cd /tmp && tar xf /tmp/consul_template.tar && cd /tmp/consul-template* && mv consul-template /usr/bin && rm -rf /tmp/* )
 
-# Copy configuration files to place
 COPY files/haproxy.json /tmp/haproxy.json
 COPY files/haproxy.ctmpl /tmp/haproxy.ctmpl
 

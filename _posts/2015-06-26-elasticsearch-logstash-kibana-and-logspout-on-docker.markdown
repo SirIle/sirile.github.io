@@ -12,12 +12,14 @@ Contents
 {:toc}
 </div>
 
+**Update on 20th of July 2015!** As the BusyBox image's package manager opkg [doesn't work anymore I have switched to using Alpine instead]({% post_url 2015-07-20-switching-to-alpine-from-busybox %}). The example images and commands have been updated. At the same time the Dockerfiles have been modularized to help update the tool versions.
+
 ## Note
 
 As versions of the tools have changed considerably from the time of the [original blog post]({% post_url 2014-12-29-logstash-and-logspout-on-docker %}), I decided to republish this instead of updating the old post. Now the tool versions are:
 
-- Elasticseach 1.6.0
-- LogStash 1.5.1
+- Elasticseach 1.7.0
+- LogStash 1.5.2
 - Kibana 4.1.0
 
 Docker-machine (0.3.0) syntax is used in the examples.
@@ -47,8 +49,8 @@ Scripts called _startLogging.sh_ and _stopLogging.sh_ can be found [here](https:
 {% highlight bash %}
 #!/bin/bash
 docker run -d --name logbox -h logbox -p 5000:5000/udp -p 9200:9200 sirile/minilogbox
-docker run -d -p 5601:5601 -h kibanabox -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro --name kibanabox sirile/kibanabox http://`docker-machine ip $DOCKER_MACHINE_NAME`:9200
-docker run -d --name logspout -h logspout -p 8100:8000 -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro -v /var/run/docker.sock:/tmp/docker.sock progrium/logspout syslog://`docker-machine ip $DOCKER_MACHINE_NAME`:5000
+docker run -d -p 5601:5601 -h kibanabox --name kibanabox sirile/kibanabox http://`docker-machine ip $DOCKER_MACHINE_NAME`:9200
+docker run -d --name logspout -h logspout -p 8100:8000 -v /var/run/docker.sock:/tmp/docker.sock progrium/logspout syslog://`docker-machine ip $DOCKER_MACHINE_NAME`:5000
 {% endhighlight %}
 
 After starting the services the Kibana UI can be found from the port 5601. For example http://192.168.99.100:5601.
@@ -77,7 +79,7 @@ Another issue I faced were a lot of parsing failures for the log messages. It wa
 
 ### Timestamps and timezones
 
-For the timestamps to be the same across the host and containers, it may be advisable to pass `-v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro` as parameters for all the container run commands.
+For the timestamps to be the same across the host and containers, it may be advisable to pass `-v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro` as parameters for all the container run commands. **Note!** It seems that this is not necessary with the current Alpine based images.
 
 ## Conclusion
 
