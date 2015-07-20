@@ -63,7 +63,7 @@ When a container offering a service is started, it is named along with a version
 
 ### Dockerfile for HAProxy image
 
-This file is used to build the image. It's based on BusyBox, which results in a very small footprint. Configuration files are copied to place and consul-template command is executed.
+This file is used to build the image. It's based on Alpine, which results in a very small footprint. Configuration files are copied to place and consul-template command is executed.
 
 {% highlight dockerfile linenos %}
 FROM alpine
