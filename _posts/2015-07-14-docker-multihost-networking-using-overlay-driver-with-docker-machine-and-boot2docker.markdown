@@ -19,11 +19,12 @@ After getting [boot2docker to work with the Docker experimental version]({% post
 
 This article expects that the Docker experimental command line version has been installed locally.
 
-**Note!** At the time of writing this (14th July 2015) VirtualBox 5.0 doesn't play along with the current docker-machine version (0.3.0). If you have upgraded to VirtualBox 5.0, you need to downgrade to 4.3.28, which (on Mac with brew) can be done with
+**Note!** At the time of writing this (15th July 2015) VirtualBox 5.0 doesn't play along with the current docker-machine version (0.3.0). If you have upgraded to VirtualBox 5.0, you need to downgrade to 4.3.30, which (on Mac with brew using the [caskroom/versions tap](https://github.com/caskroom/homebrew-cask/blob/master/USAGE.md#additional-taps-optional)) can be done with
 
 {% highlight bash %}
+brew tap caskroom/versions
 brew cask uninstall virtualbox
-brew cask install virtualbox4328100309
+brew cask install virtualbox4330101610
 {% endhighlight %}
 
 ## Infrastructure node
