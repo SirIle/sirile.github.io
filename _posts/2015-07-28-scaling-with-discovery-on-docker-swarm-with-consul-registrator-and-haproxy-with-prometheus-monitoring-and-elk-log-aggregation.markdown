@@ -178,6 +178,7 @@ Then the cAdvisor instances can be directly accessed from port 8080, for example
 One of the functions in _docker-functions.sh_ can also return an external IP for a container running a given image. Remember to point the docker client to swarm master.
 
 {% highlight bash %}
+$ source docker-functions.sh
 $ dock --swarm swarm-master
 $ dockip rest
 192.168.99.102
@@ -241,11 +242,33 @@ total 72
 
 ### docker-functions.sh
 
-This file contains functions that make life with containers in a swarm easier. The functions are also used in the other scripts to prevent duplication of code.
+This file contains functions that make life with containers in a swarm easier. The functions are also used in the other scripts to prevent duplication of code. Easiest way is to run `source docker-functions.sh`.
+
+#### dock
+
+This is a shortcut that is used to point the docker command line client to a given docker-machine controlled node. For example to point to infra the command is `dock infra` and to point to swarm-master the command is `dock --swarm swarm-master`.
+
+#### dockpsi
+
+This function returns ps information for all containers running a given image. For example to query all the containers on a swarm that run an image containing the string 'node':
+
+{% highlight bash %}
+$ dockpsi node
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                          NAMES
+f495c4fbe5b8        sirile/node-test    "node /app.js"      2 hours ago         Up 2 hours          192.168.99.102:32778->80/tcp   swarm-app-1/dreamy_euclid
+e8d148835aab        sirile/node-test    "node /app.js"      2 hours ago         Up 2 hours          192.168.99.101:32777->80/tcp   swarm-master/suspicious_yalow
+86cb5b75ef42        sirile/node-test    "node /app.js"      2 hours ago         Up 2 hours          192.168.99.102:32777->80/tcp   swarm-app-1/cranky_feynman
+50f9e99d8144        sirile/node-test    "node /app.js"      2 hours ago         Up 2 hours          192.168.99.101:32776->80/tcp   swarm-master/insane_lalande
+f8942be4f752        sirile/node-test    "node /app.js"      2 hours ago         Up 2 hours          192.168.99.102:32776->80/tcp   swarm-app-1/pensive_ptolemy
+{% endhighlight %}
+
+#### dockrm
+
+This function removes all the instances of a given image. For example if the image is sirile/node-test you can run `dockrm node` to remove all running containers that run that image.
 
 ### addLogging.sh and addMonitoring.sh
 
-These scripts check that the infra node is running, then start the main containers there. LogBox for logging and Prometheus for monitoring. Then they loop through the swarm nodes (with a bit of awk and xargs trickery) and start the required services there if they are not already running. In the case of a_ddMonitoring.sh_, it also rewrites the Prometheus configuration file _prometheus.yml_ and sends a SIGHUP to the running Prometheus container if it exists so that the configuration is reloaded.
+These scripts check that the infra node is running, then start the main containers there. LogBox for logging and Prometheus for monitoring. Then they loop through the swarm nodes (with a bit of awk and xargs trickery) and start the required services there if they are not already running. In the case of _addMonitoring.sh_, it also rewrites the Prometheus configuration file _prometheus.yml_ and sends a SIGHUP to the running Prometheus container if it exists so that the configuration is reloaded.
 
 ### createInfraNode.sh and createSwarmNode.sh
 
