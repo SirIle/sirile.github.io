@@ -19,7 +19,7 @@ After playing around quite a lot with automatic scaling using [Registrator trigg
 
 There are a few frameworks that achieve pretty much the same result, but I wanted to build from scratch to get to know how the components work. The end result is a handful of shell scripts that can be used to set up the Docker Swarm and add or remove logging and monitoring to all the nodes. If new nodes are added, just by running the script again they are joined to the monitoring and log aggregation system.
 
-To achieve three node swarm set-up with logging and monitoring running five instances of a service the following is needed:
+A three node swarm set-up with logging and monitoring running five instances of a test service can be done with:
 
 {% highlight bash %}
 git clone https://github.com/SirIle/docker-multihost.git && cd docker-multihost/swarm
