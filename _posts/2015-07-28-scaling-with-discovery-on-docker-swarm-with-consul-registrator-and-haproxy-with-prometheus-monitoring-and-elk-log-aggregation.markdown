@@ -126,6 +126,18 @@ a1aaa0691a548aa9cc6db024537f83dc0c2f08d7344f1e1e41a69dc28b91db5f
 ** Service available at http://192.168.99.102/hello/v1 **
 {% endhighlight %}
 
+#### Using Consul for service discovery in the containers
+
+Consul has been specified as the default DNS server for the containers. Registered services can be looked up normally, so after starting a container you can do this (based on the previous example):
+
+{% highlight bash %}
+$ docker exec -it 16f25b75b4fdee72be6d992c4c7f39f01604c2b4cd5c2a062b0779d031f403f0 ping consul.service.consul
+PING consul.service.consul (192.168.99.100): 56 data bytes
+64 bytes from 192.168.99.100: seq=0 ttl=63 time=0.208 ms
+64 bytes from 192.168.99.100: seq=1 ttl=63 time=0.434 ms
+{% endhighlight %}
+
+
 ### Add log aggregation
 
 ELK based log aggregation system can be added with the script
@@ -184,7 +196,7 @@ $ dockip rest
 192.168.99.102
 {% endhighlight %}
 
-Things can be made even more simple by joining a local Consul to the Consul that is running on infra node and using it as the DNS server.
+Things can be made even more simple by joining a local Consul to the Consul that is running on infra node and using it as the local DNS server.
 
 ### Setting up resolver configuration
 
@@ -205,7 +217,7 @@ port 8600
 
 Now the domain .consul is resolved with the DNS server running locally on port 8600 which is the default port for Consul DNS.
 
-### Starting a local Consul and joining it to infra consul
+### Starting a local Consul and joining it to infra Consul
 
 First you need to install Consul locally, which can be done through [brew](http://brew.sh) with `brew install consul`. Then you can start a local Consul instance that joins to the Consul server running on infra node with
 
