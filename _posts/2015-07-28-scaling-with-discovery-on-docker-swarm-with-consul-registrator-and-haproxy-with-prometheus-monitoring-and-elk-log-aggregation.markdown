@@ -30,13 +30,15 @@ for i in {0..2}; do ./createSwarmNode.sh $i; done
 for i in {1..5}; do ./startService.sh hello/v1 sirile/node-test; done
 {% endhighlight %}
 
-*Picture of architecture will be added soon*
+This automatically starts a HAProxy which acts as the rest endpoint and directs traffic with the url pattern of /hello/v1 to the application containers. HAProxy itself could be started on any of the swarm nodes. If wanted this can be controlled with labels. The scripts display the public IP address of the endpoint. As Consul is used, joining the local Consul server to the one controlling the swarm is also an option and then finding the application becomes just http://rest.service.consul/hello/v1.
+
+![Overview_of_Swarm](/images/Overview_of_Swarm.png)
 
 ### Target architecture
 
 As Docker overlay networking matures I'll move towards target architecture where I have front-end nodes that expose ports outside and application nodes that are only reachable through the overlay networking. At the moment this set-up doesn't yet work and registrator doesn't understand overlay networking services at all so Consul based service discovery can't be used with it. Docker Swarm labels can be used to distinguish different roles and so direct the applications to specific swarm members, but that isn't used in this example as all the nodes can work in all the roles.
 
-*Picture of target architecture will be added soon*
+![Swarm_target_architecture](/images/Swarm_target_architecture.png)
 
 #### Cloud service providers
 
