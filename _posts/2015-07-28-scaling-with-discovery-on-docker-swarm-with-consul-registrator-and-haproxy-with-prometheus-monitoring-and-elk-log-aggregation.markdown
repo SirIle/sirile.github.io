@@ -13,6 +13,8 @@ Contents
 {:toc}
 </div>
 
+**Update on 5.8.2015!** The scripts have been updated so that the examples can also be run in Amazon Virtual Private Cloud. More information can be found from the [second part of the post]({% post_url 2015-08-05-part-2-scaling-in-amazon-aws-vpc-with-docker-docker-machine-consul-registrator-haproxy-elk-and-prometheus %}).
+
 ## General
 
 After playing around quite a lot with automatic scaling using [Registrator triggered HAProxy configuration generation]({% post_url 2015-05-18-using-haproxy-and-consul-for-dynamic-service-discovery-on-docker %}) I wanted to combine it with Docker Swarm. At the same time I wanted to see if [log aggregation using ELK-stack]({% post_url 2015-06-26-elasticsearch-logstash-kibana-and-logspout-on-docker %}) (ElasticSearch, LogStash and Kibana) could be made pluggable and add Prometheus based metrics collection as an option.
