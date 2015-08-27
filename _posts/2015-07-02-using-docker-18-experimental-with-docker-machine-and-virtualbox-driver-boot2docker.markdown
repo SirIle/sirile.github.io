@@ -1,7 +1,6 @@
 ---
 layout: post
-title: Using Docker 1.8 experimental with docker-machine and VirtualBox driver (boot2docker)
-date: '2015-07-02 15:05'
+title: Using Docker 1.9 experimental with docker-machine and VirtualBox driver (boot2docker)
 commentIssueId: 5
 ---
 
@@ -13,12 +12,14 @@ Contents
 {:toc}
 </div>
 
+**Update on 27.8.2015** I ran the build for newest experimental and the image for boot2docker for experimental 1.9 can be found from [here](http://sirile.github.io/files/boot2docker-1.9.iso). I updated the examples to use 1.9. The post can be found from both URLs.
+
 ## TL;DR
 
-To use boot2docker.iso which includes the 1.8 experimental Docker (at the moment _Docker version 1.8.0-dev, build 8c7cd78, experimental_), create the machine with
+To use boot2docker.iso which includes the 1.9 experimental Docker (at the moment _Docker version 1.9.0-dev, build 5dadfa8, experimental_), create the machine with
 
 {% highlight bash %}
-docker-machine create -d virtualbox --virtualbox-boot2docker-url=http://sirile.github.io/files/boot2docker-1.8.iso dev
+docker-machine create -d virtualbox --virtualbox-boot2docker-url=http://sirile.github.io/files/boot2docker-1.9.iso dev
 {% endhighlight %}
 
 I'll explain the creation process of the image if you want to do it yourself.
@@ -57,11 +58,11 @@ docker build -t my-boot2docker-img .
 the new image can be exported with
 
 {% highlight bash %}
-docker run --rm my-boot2docker-img > boot2docker-1.8.iso
+docker run --rm my-boot2docker-img > boot2docker-1.9.iso
 {% endhighlight %}
 
-The resulting file is the one [hosted here](http://sirile.github.io/files/boot2docker-1.8.iso).
+The resulting file is the one [hosted here](http://sirile.github.io/files/boot2docker-1.9.iso).
 
 ## Next steps
 
-The same script can be used to update the boot2docker.iso to the latest experimental Docker executable release, it's not tied to 1.8.
+The same script can be used to update the boot2docker.iso to the latest experimental Docker executable release, it's not tied to 1.9.
