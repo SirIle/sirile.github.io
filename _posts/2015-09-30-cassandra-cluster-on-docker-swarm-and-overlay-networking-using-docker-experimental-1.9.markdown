@@ -33,6 +33,17 @@ The Cassandra image used is almost uncustomized and can be found from [GitHub](h
 
 ## Setting up the environment
 
+### Downloading the experimental boot2docker-image and setting it as the default
+
+As downloading the image every time takes considerable time, it's easier to download the image once and set it as the default for docker-machine. (Thanks JoyceBabu for the tip!).
+
+{% highlight bash %}
+curl -L http://sirile.github.io/files/boot2docker-1.9.iso > $HOME/.docker/machine/cache/boot2docker-1.9.iso
+export VIRTUALBOX_BOOT2DOCKER_URL=file://$HOME/.docker/machine/cache/boot2docker-1.9.iso
+{% endhighlight %}
+
+Afterwards unsetting the variable is enough to revert to default image.
+
 ### Creating the infra node
 
 Infra node contains the private registry and Consul. The IP is given so that the locally built images can be pushed to the private registry without setting up TLS. If the created node gets another IP from the VirtualBox DHCP server it may be easiest to reset the DHCP server (I disabled and re-enabled it from the VirtualBox GUI) and restart the machine. Otherwise getting the private registry to work may require quite a lot of tinkering.
@@ -40,7 +51,7 @@ Infra node contains the private registry and Consul. The IP is given so that the
 #### Create the node using Docker Machine
 
 {% highlight bash %}
-docker-machine create --driver virtualbox  --virtualbox-memory 2048 --virtualbox-boot2docker-url http://sirile.github.io/files/boot2docker-1.9.iso --engine-insecure-registry 192.168.99.100:5000 infra
+docker-machine create --driver virtualbox  --virtualbox-memory 2048  --engine-insecure-registry 192.168.99.100:5000 infra
 {% endhighlight %}
 
 #### Start the private registry
@@ -66,7 +77,7 @@ export SWARM_TOKEN=$(docker $(docker-machine config infra) run swarm create)
 #### Create the node using Docker Machine
 
 {% highlight bash %}
-docker-machine create -d virtualbox --virtualbox-boot2docker-url=http://sirile.github.io/files/boot2docker-1.9.iso --engine-opt="default-network=overlay:multihost" --engine-opt="kv-store=consul:$(docker-machine ip infra):8500" --engine-label="com.docker.network.driver.overlay.bind_interface=eth1" --engine-insecure-registry $(docker-machine ip infra):5000 swarm-0
+docker-machine create -d virtualbox  --engine-opt="default-network=overlay:multihost" --engine-opt="kv-store=consul:$(docker-machine ip infra):8500" --engine-label="com.docker.network.driver.overlay.bind_interface=eth1" --engine-insecure-registry $(docker-machine ip infra):5000 swarm-0
 {% endhighlight %}
 
 #### Start swarm
@@ -83,7 +94,7 @@ This step can be repeated and more nodes can be created by just changing the mac
 #### Create the node using Docker Machine
 
 {% highlight bash %}
-docker-machine create -d virtualbox --virtualbox-boot2docker-url=http://sirile.github.io/files/boot2docker-1.9.iso --engine-opt="default-network=overlay:multihost" --engine-opt="kv-store=consul:$(docker-machine ip infra):8500" --engine-label="com.docker.network.driver.overlay.bind_interface=eth1" --engine-label="com.docker.network.driver.overlay.neighbor_ip=$(docker-machine ip swarm-0)" --engine-insecure-registry $(docker-machine ip infra):5000 swarm-1
+docker-machine create -d virtualbox  --engine-opt="default-network=overlay:multihost" --engine-opt="kv-store=consul:$(docker-machine ip infra):8500" --engine-label="com.docker.network.driver.overlay.bind_interface=eth1" --engine-label="com.docker.network.driver.overlay.neighbor_ip=$(docker-machine ip swarm-0)" --engine-insecure-registry $(docker-machine ip infra):5000 swarm-1
 {% endhighlight %}
 
 #### Start the swarm agent
