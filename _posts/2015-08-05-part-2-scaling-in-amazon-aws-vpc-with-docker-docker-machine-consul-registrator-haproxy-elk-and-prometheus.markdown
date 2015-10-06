@@ -17,6 +17,8 @@ Contents
 
 In the [previous post]({% post_url 2015-07-28-scaling-with-discovery-on-docker-swarm-with-consul-registrator-and-haproxy-with-prometheus-monitoring-and-elk-log-aggregation %}) I demonstrated scaling on a local VirtualBox environment using HAProxy based load balancing with added service discovery and scaling over multiple nodes on Docker Swarm. In this article I show how the updated scripts can be used to control an environment running on [Amazon Virtual Private Cloud (VPC)](https://aws.amazon.com/vpc/) environment.
 
+**Update on 6.10.2015!** The scripts have been quite extensively updated and cleaned up for presentation in OpenSlava 2015. I'll describe the new functionality in a separate blogpost later, but have updated this so that the commands should work. Major addition has been the setting up of private registry both locally and in AWS and loading the images there. This also supports the experimental overlay network version of the demo. For launching containers for images not in the private registry use the shell script `./startExtService.sh` as the default `./startService.sh` tries to fetch the image from the private registry.
+
 ![Swarm on AWS](/images/Swarm_on_AWS.png)
 
 ## Setting up the Amazon VPC
@@ -68,9 +70,10 @@ To start up an environment with the infra node, three swarm instances and ten in
 
 {% highlight bash %}
 git clone https://github.com/SirIle/docker-multihost.git && cd docker-multihost/swarm
+./setupRegistry.sh
 ./createInfraNode.sh
 for i in {0..2}; do ./createSwarmNode.sh $i; done
-for i in {1..10}; do ./startService.sh hello/v1 sirile/node-image-test; done
+for i in {1..10}; do ./startService.sh hello/v1 node-image-test; done
 {% endhighlight %}
 
 Then you need to add the rule for (at least) port 80 in the security group for your own IP. This can be done through the web UI or with the aws cli.

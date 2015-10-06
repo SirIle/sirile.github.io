@@ -15,6 +15,8 @@ Contents
 
 **Update on 5.8.2015!** The scripts have been updated so that the examples can also be run in Amazon Virtual Private Cloud. More information can be found from the [second part of the post]({% post_url 2015-08-05-part-2-scaling-in-amazon-aws-vpc-with-docker-docker-machine-consul-registrator-haproxy-elk-and-prometheus %}).
 
+**Update on 6.10.2015!** The scripts have been quite extensively updated and cleaned up for presentation in OpenSlava 2015. I'll describe the new functionality in a separate blogpost later, but have updated this so that the commands should work. Major addition has been the setting up of private registry both locally and in AWS and loading the images there. This also supports the experimental overlay network version of the demo. For launching containers for images not in the private registry use the shell script `./startExtService.sh` as the default `./startService.sh` tries to fetch the image from the private registry.
+
 ## General
 
 After playing around quite a lot with automatic scaling using [Registrator triggered HAProxy configuration generation]({% post_url 2015-05-18-using-haproxy-and-consul-for-dynamic-service-discovery-on-docker %}) I wanted to combine it with Docker Swarm. At the same time I wanted to see if [log aggregation using ELK-stack]({% post_url 2015-06-26-elasticsearch-logstash-kibana-and-logspout-on-docker %}) (ElasticSearch, LogStash and Kibana) could be made pluggable and add Prometheus based metrics collection as an option.
@@ -25,11 +27,12 @@ A three node swarm set-up with logging and monitoring running five instances of 
 
 {% highlight bash %}
 git clone https://github.com/SirIle/docker-multihost.git && cd docker-multihost/swarm
+./setupRegistry.sh
 ./createInfraNode.sh
 for i in {0..2}; do ./createSwarmNode.sh $i; done
 ./addLogging.sh
 ./addMonitoring.sh
-for i in {1..5}; do ./startService.sh hello/v1 sirile/node-test; done
+for i in {1..5}; do ./startService.sh hello/v1 node-image-test; done
 {% endhighlight %}
 
 This automatically starts a HAProxy which acts as the rest endpoint and directs traffic with the url pattern of /hello/v1 to the application containers. HAProxy itself could be started on any of the swarm nodes. If wanted this can be controlled with labels. The scripts display the public IP address of the endpoint. As Consul is used, joining the local Consul server to the one controlling the swarm is also an option and then finding the application becomes just http://rest.service.consul/hello/v1.
@@ -50,9 +53,9 @@ Everything should work also when running against a cloud based service providers
 
 The following tools need to be installed for the scripts to work. Everything has been tested on Mac, but should work also on Linux. For Windows tweaking would be necessary, but all the tools have been ported, so just tweaking the scripts should be enough.
 
-- VirtualBox (5.0.0)
-- Docker Machine (0.3.1)
-- Docker (1.7.1)
+- VirtualBox (5.0.4)
+- Docker Machine (0.4.1)
+- Docker (1.8.2)
 
 #### Docker Compose
 
@@ -83,6 +86,16 @@ git clone https://github.com/SirIle/docker-multihost.git && cd docker-multihost/
 {% endhighlight %}
 
 ## Creating the Swarm
+
+### Set up private registry
+
+A private registry is created with
+
+{% highlight bash %}
+./setupRegistry.sh
+{% endhighlight %}
+
+This also pulls, tags and pushes specific images to the registry.
 
 ### Create infra node
 
@@ -124,7 +137,7 @@ Any service can be used as long as it exposes the service through port 80 so tha
 When a service is started using the script it checks that at least one HAProxy container is running and if not, starts it and shows the address of the HAProxy through which the service is available.
 
 {% highlight bash %}
-$ ./startService.sh hello/v1 sirile/node-test
+$ ./startExtService.sh hello/v1 sirile/node-test
 ** Starting image sirile/node-test with the name hello/v1 **
 a1aaa0691a548aa9cc6db024537f83dc0c2f08d7344f1e1e41a69dc28b91db5f
 ** Service available at http://192.168.99.102/hello/v1 **
@@ -151,10 +164,10 @@ $ ./addLogging.sh
 ** Starting LogBox and Kibana on infra **
 decc99d53c5033f1758b4b63973daff3b63e1a3923454647ba662fd86ea37d08
 c5e9f612143a84550921fafbf6b7a122451f3463ee852c66268eed7881bfeb2f
-** Servers in the swarm: swarm-app-1 swarm-master **
-** Starting logspout on swarm-app-1
+** Servers in the swarm: swarm-1 swarm-0 **
+** Starting logspout on swarm-1
 2ca445fd69c85383ea2485004e3ad0584e94910281981dcbfc8f7b7788e48fc0
-** Starting logspout on swarm-master
+** Starting logspout on swarm-0
 ad5adf8a329eb4243f87652df8da04f722bfec9fa2ee96062ba6f2a773339b2e
 ** Logging system started, Kibana is available at http://192.168.99.100:5601 **
 {% endhighlight %}
@@ -177,10 +190,10 @@ Prometheus based monitoring and the corresponding cAdvisor containers can be sta
 
 {% highlight bash %}
 $ ./addMonitoring.sh
-** Servers in the swarm: swarm-app-1 swarm-master **
-** Starting cAdvisor on swarm-app-1
+** Servers in the swarm: swarm-1 swarm-0 **
+** Starting cAdvisor on swarm-1
 3f6a32670668d0a54d91df02d6107fc4a8225c3fb2f4637045622130a3b1ed83
-** Starting cAdvisor on swarm-master
+** Starting cAdvisor on swarm-0
 8a379f5385b9cc9b99d8eadf473bc647db5c313f1df17e1536199b193f0a668d
 ** Starting Prometheus on infra **
 aff2bb500671d7b81d91331845abdb61466f4638888cc552c299869a728a3010
@@ -195,7 +208,7 @@ One of the functions in _docker-functions.sh_ can also return an external IP for
 
 {% highlight bash %}
 $ source docker-functions.sh
-$ dock --swarm swarm-master
+$ dock --swarm swarm-0
 $ dockip rest
 192.168.99.102
 {% endhighlight %}
