@@ -16,6 +16,8 @@ Contents
 
 **Update on 20th of July 2015!** As the BusyBox image's package manager opkg [doesn't work anymore I have switched to using Alpine instead]({% post_url 2015-07-20-switching-to-alpine-from-busybox %}). The example images and commands have been updated.
 
+**Update on 7th of October 2015!** Updated the example commands as the image has later been modified. (Thanks Robert for the heads up)
+
 ## General
 
 As I have been using Docker more I have started going towards simpler, stand alone containers. This aligns well with the current rise of microservices. To effectively use microservices a mechanism for service registration and discovery is needed so that the benefits of easy scaling can be realized.
@@ -90,7 +92,6 @@ This file tells consul-template what to do when consul sends signals through the
 In the command section we tell consul-template to run haproxy command after every change. The flag -sf tells it to kill all the previous running instances with defined PIDs which are queried with pidof-command. This causes the HAProxy to reload the configuration but prevents multiple instances being running simultaneously.
 
 {% highlight json linenos %}
-consul = "consul.service.consul:8500"
 template {
   source = "/tmp/haproxy.ctmpl"
   destination = "/etc/haproxy/haproxy.cfg"
@@ -198,7 +199,7 @@ docker run -d -e SERVICE_NAME=hello/v1 -e SERVICE_TAGS=rest -h hello1 --name hel
 A dry run of a template can be generated with
 
 {% highlight bash %}
-docker run --dns 172.17.42.1 --rm sirile/haproxy consul-template -config=/tmp/haproxy.json -dry -once
+docker run --dns 172.17.42.1 --rm sirile/haproxy -consul=consul.service.consul:8500 -dry -once
 {% endhighlight %}
 
 Here we tell the HAProxy container to run consul-template command. As it is configured to find Consul from the address consul.service.consul, we're telling it to use Consul provided DNS for discovery.
