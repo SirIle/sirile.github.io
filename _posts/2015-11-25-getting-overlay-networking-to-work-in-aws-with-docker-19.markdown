@@ -13,6 +13,8 @@ Contents
 {:toc}
 </div>
 
+**Update on 4.12.2015** Docker-machine 0.5.2 has been released and it works against systems using systemd, so it's not necessary to compile it manually any more.
+
 ## General
 
 Docker 1.9 was released a while ago and with it the networking model was redone. Most interesting feature is the overlay networking which enables a seamless networking between containers on different hosts. The current examples mainly use VirtualBox and demonstrate how things work locally. In this article I go through the steps needed to get the overlay networking to function in AWS using Docker Machine and Swarm.
@@ -20,6 +22,8 @@ Docker 1.9 was released a while ago and with it the networking model was redone.
 ## Prerequisites
 
 ### Docker Machine version 0.5.2-dev
+
+**NB! This step isn't needed any more**
 
 For overlay networking to work the host needs to have kernel which is at least version 3.19. Most of the images available in AWS don't yet run that (CoreOS, REL), but Ubuntu 15.10 does. The default Ubuntu for Docker Machine in AWS is 14.10, so a different AMI needs to be defined. This leads to an issue with Docker Machine where it has been designed to work against an Ubuntu system using Upstart instead of systemd that the 15.04 version uses. Luckily a PR has already been merged to Docker Machine (#1891), but as of now this requires a compilation of Docker Machine. The process for this is explained [here](https://github.com/docker/machine/blob/master/CONTRIBUTING.md). I used the local go based build.
 
