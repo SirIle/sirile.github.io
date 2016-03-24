@@ -15,6 +15,8 @@ Contents
 
 ## General
 
+Test
+
 In an earlier [post]({% post_url 2015-11-25-getting-overlay-networking-to-work-in-aws-with-docker-19 %}) I demonstrated how to get the new Docker 1.9 overlay networking to work in AWS using Docker Machine. In this post I add the scaling related parts from [another earlier post]({% post_url 2015-08-05-part-2-scaling-in-amazon-aws-vpc-with-docker-docker-machine-consul-registrator-haproxy-elk-and-prometheus %}) into the mix, namely Consul, registrator and HAProxy combined with consul-template. The examples should run both locally using VirtualBox and in Amazon.
 
 ### Set-up in VirtualBox
