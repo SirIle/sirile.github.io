@@ -103,7 +103,7 @@ template {
 
 The template file that is filled by consul-template when Consul backend information changes. It uses [go templating language](http://golang.org/pkg/text/template/). Detailed information about HAProxy configuration can be found [here](http://www.haproxy.org/download/1.5/doc/configuration.txt).
 
-{% highlight apache linenos %}
+{% highlight bash linenos %}
 {% raw %}
 global
     log 127.0.0.1   local0
@@ -206,7 +206,7 @@ Here we tell the HAProxy container to run consul-template command. As it is conf
 
 On an environment where the "service/haproxy/maxconn" is set to 1024 on Consul and one hello/v1 service is running, the following result is generated:
 
-{% highlight apache %}
+{% highlight bash %}
 global
     log 127.0.0.1   local0
     log 127.0.0.1   local1 notice
