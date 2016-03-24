@@ -1,7 +1,0 @@
----
-layout: "post"
-title: "humppa"
-date: "2016-03-24 13:28"
----
-
-Does this work at all?
