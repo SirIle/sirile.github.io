@@ -67,6 +67,7 @@ When a container offering a service is started, it is named along with a version
 
 This file is used to build the image. It's based on Alpine, which results in a very small footprint. Configuration files are copied to place and consul-template command is executed.
 
+<figure class="lineno-container">
 {% highlight dockerfile linenos %}
 FROM alpine
 MAINTAINER Ilkka Anttonen version: 0.3
@@ -84,6 +85,7 @@ COPY files/haproxy.ctmpl /tmp/haproxy.ctmpl
 
 CMD ["consul-template", "-config=/tmp/haproxy.json"]
 {% endhighlight %}
+</figure>
 
 ### haproxy.json
 
@@ -91,6 +93,7 @@ This file tells consul-template what to do when consul sends signals through the
 
 In the command section we tell consul-template to run haproxy command after every change. The flag -sf tells it to kill all the previous running instances with defined PIDs which are queried with pidof-command. This causes the HAProxy to reload the configuration but prevents multiple instances being running simultaneously.
 
+<figure class="lineno-container">
 {% highlight json linenos %}
 template {
   source = "/tmp/haproxy.ctmpl"
@@ -98,11 +101,13 @@ template {
   command = "haproxy -f /etc/haproxy/haproxy.cfg -sf $(pidof haproxy) &"
 }
 {% endhighlight %}
+</figure>
 
 ### haproxy.ctmpl
 
 The template file that is filled by consul-template when Consul backend information changes. It uses [go templating language](http://golang.org/pkg/text/template/). Detailed information about HAProxy configuration can be found [here](http://www.haproxy.org/download/1.5/doc/configuration.txt).
 
+<figure class="lineno-container">
 {% highlight bash linenos %}
 {% raw %}
 global
@@ -144,6 +149,7 @@ listen stats *:1936
     stats auth someuser:password
 {% endraw %}
 {% endhighlight %}
+</figure>
 
 The default section has the debug mode set on (line 4). This causes HAProxy to echo all the logging to stdout which is not desired in production, but can be useful in development environment. For more serious use it can be commented out.
 

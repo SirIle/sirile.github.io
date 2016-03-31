@@ -17,3 +17,5 @@ markdown: kramdown
 highlighter: rouge
 #future: true
 timezone: Europe/Helsinki
+#sass:
+#  style: compressed
