@@ -15,7 +15,9 @@ Contents
 
 **Update on 5.8.2015!** The scripts have been updated so that the examples can also be run in Amazon Virtual Private Cloud. More information can be found from the [second part of the post]({% post_url 2015-08-05-part-2-scaling-in-amazon-aws-vpc-with-docker-docker-machine-consul-registrator-haproxy-elk-and-prometheus %}).
 
-**Update on 6.10.2015!** The scripts have been quite extensively updated and cleaned up for presentation in OpenSlava 2015. I'll describe the new functionality in a separate blogpost later, but have updated this so that the commands should work. Major addition has been the setting up of private registry both locally and in AWS and loading the images there. This also supports the experimental overlay network version of the demo. For launching containers for images not in the private registry use the shell script `./startExtService.sh` as the default `./startService.sh` tries to fetch the image from the private registry.
+**Update on 6.10.2015!** The scripts have been quite extensively updated and cleaned up for presentation in OpenSlava 2015. I'll describe the new functionality in a separate blogpost later, but have updated this so that the commands should work. Major addition has been the setting up of private registry both locally and in AWS and loading the images there. The startService.sh command first tried to use the local registry and if the image can't be found there, it's downloaded from the Docker hub. This also supports the experimental overlay network version of the demo.
+
+**Update on 3.4.2016!** As I had changed the scripts so that the startService.sh tries to fetch the image from external if it can't be found from the local I updated also this post. Thanks for notifying @Laxman-SM.
 
 ## General
 
@@ -27,11 +29,11 @@ A three node swarm set-up with logging and monitoring running five instances of 
 
 {% highlight bash %}
 git clone https://github.com/SirIle/docker-multihost.git && cd docker-multihost/swarm
-./setupRegistry.sh
-./createInfraNode.sh
-for i in {0..2}; do ./createSwarmNode.sh $i; done
-./addLogging.sh
-./addMonitoring.sh
+scripts/setupRegistry.sh
+scripts/createInfraNode.sh
+for i in {0..2}; do scripts/createSwarmNode.sh $i; done
+scripts/addLogging.sh
+scripts/addMonitoring.sh
 for i in {1..5}; do ./startService.sh hello/v1 node-image-test; done
 {% endhighlight %}
 
@@ -92,7 +94,7 @@ git clone https://github.com/SirIle/docker-multihost.git && cd docker-multihost/
 A private registry is created with
 
 {% highlight bash %}
-./setupRegistry.sh
+scripts/setupRegistry.sh
 {% endhighlight %}
 
 This also pulls, tags and pushes specific images to the registry.
@@ -102,7 +104,7 @@ This also pulls, tags and pushes specific images to the registry.
 Infra node is created with the script
 
 {% highlight bash %}
-./createInfraNode.sh
+scripts/createInfraNode.sh
 {% endhighlight %}
 
 It first checks if infra node hasn't been already created quitting if it has and then starts the Consul server.
@@ -112,18 +114,20 @@ It first checks if infra node hasn't been already created quitting if it has and
 Swarm master is the first node and can be created by giving the command a 0 as an argument.
 
 {% highlight bash %}
-./createSwarmNode.sh 0
+scripts/createSwarmNode.sh 0
 {% endhighlight %}
 
 The command line for starting the Swarm master has the corresponding flag set, but otherwise the node itself is almost the same as for normal nodes. The Consul running on infra is used as the discovery back-end and so the infra node needs to be running.
+
+**NB!** If you only start this one node, please add "front-end" after the command as the startService.sh script starts the HAProxy on a that node.
 
 ### Optional: create zero or many swarm members
 
 More swarm members can be created at any time by running the same script with a different id
 
 {% highlight bash %}
-./createSwarmNode.sh 1
-./createSwarmNode.sh 2
+scripts/createSwarmNode.sh 1 front-end
+scripts/createSwarmNode.sh 2 back-end
 {% endhighlight %}
 
 The started nodes automatically start Registrator and Consul and join the Consul running on infra node.
@@ -137,7 +141,7 @@ Any service can be used as long as it exposes the service through port 80 so tha
 When a service is started using the script it checks that at least one HAProxy container is running and if not, starts it and shows the address of the HAProxy through which the service is available.
 
 {% highlight bash %}
-$ ./startExtService.sh hello/v1 sirile/node-test
+$ ./startService.sh hello/v1 sirile/node-test
 ** Starting image sirile/node-test with the name hello/v1 **
 a1aaa0691a548aa9cc6db024537f83dc0c2f08d7344f1e1e41a69dc28b91db5f
 ** Service available at http://192.168.99.102/hello/v1 **
@@ -181,7 +185,7 @@ LogSpout is started on all swarm nodes and the log traffic is directed to LogSta
 LogBox and all the LogSpout instances can be removed with the script
 
 {% highlight bash %}
-./rmLogging.sh
+scripts/rmLogging.sh
 {% endhighlight %}
 
 ### Add monitoring
@@ -189,7 +193,7 @@ LogBox and all the LogSpout instances can be removed with the script
 Prometheus based monitoring and the corresponding cAdvisor containers can be started with
 
 {% highlight bash %}
-$ ./addMonitoring.sh
+$ scripts/addMonitoring.sh
 ** Servers in the swarm: swarm-1 swarm-0 **
 ** Starting cAdvisor on swarm-1
 3f6a32670668d0a54d91df02d6107fc4a8225c3fb2f4637045622130a3b1ed83
@@ -207,7 +211,7 @@ Then the cAdvisor instances can be directly accessed from port 8080, for example
 One of the functions in _docker-functions.sh_ can also return an external IP for a container running a given image. Remember to point the docker client to swarm master.
 
 {% highlight bash %}
-$ source docker-functions.sh
+$ source scripts/docker-functions.sh
 $ dock --swarm swarm-0
 $ dockip rest
 192.168.99.102
@@ -253,7 +257,7 @@ $ curl rest.service.consul/hello/v1
 
 ## Scripts and files
 
-In this section I'll explain the different scripts quickly. The directory looks like
+In this section I'll explain the different scripts quickly. The scripts directory looks like
 
 {% highlight bash %}
 $ ls -lF
@@ -266,7 +270,6 @@ total 72
 -rw-r--r--  1 ilkka.anttonen  562225435   984 Jul 28 10:23 prometheus.yml
 -rwxr--r--  1 ilkka.anttonen  562225435   286 Jul 27 14:24 rmLogging.sh*
 -rwxr--r--  1 ilkka.anttonen  562225435   286 Jul 27 15:30 rmMonitoring.sh*
--rwxr--r--  1 ilkka.anttonen  562225435   805 Jul 27 14:17 startService.sh*
 {% endhighlight %}
 
 ### docker-functions.sh
