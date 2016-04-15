@@ -128,7 +128,7 @@ defaults
     timeout server  50000{{end}}
 {% endraw %}{% raw %}
 frontend http-in
-    bind \÷*:80{{range $i,$a:=services}}{{$path:=.Name}}{{range .Tags}}{{if eq . "rest"}}
+    bind *:80{{range $i,$a:=services}}{{$path:=.Name}}{{range .Tags}}{{if eq . "rest"}}
     acl app{{$i}} path_beg -i /{{$path}}{{end}}{{end}}{{end}}
     {{range $i,$a:=services}}{{range .Tags}}{{if eq . "rest"}}
     use_backend srvs_app{{$i}} if app{{$i}}{{end}}{{end}}{{end}}
