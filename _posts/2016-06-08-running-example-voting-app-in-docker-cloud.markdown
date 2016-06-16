@@ -13,6 +13,8 @@ Contents
 {:toc}
 </div>
 
+**Update 16th June 2016** Now the base images have been updated to use _alpine:3.4.0_, so creating own fork isn't necessary any more. I updated the configuration example to reflect that.
+
 ## General
 
 In this post I'll show how to get the Docker's [example-voting-app](https://github.com/docker/example-voting-app) to run on [Docker Cloud](https://cloud.docker.com). At the moment it requires some tweaks to the application as the service discovery in Docker Cloud is built on DNS which is a bit bugged in Alpine base image version 3.3.0 which is used in some components of the application, but that allows me to demonstrate the build mechanism that Docker Cloud offers. End result will be a scalable version of the application with HAProxy-based load balancing for both *voting-app* and *result-app*.
@@ -28,6 +30,8 @@ When you log in to Docker Cloud, it offers a wizard which will take you through 
 ![Getting started with Docker Cloud](/images/dockercloud/getting_started.png)
 
 ## The example-voting-application
+
+**NB!** The base images have now been fixed, so this chapter can be skipped.
 
 ### Issues with the Alpine base images and DNS
 
@@ -127,13 +131,13 @@ redis:
 result-app:
   image: 'docker/example-voting-app-result-app:latest'
 voting-app:
-  image: 'ilkkaanttonen/voting-app:latest'
+  image: 'docker/example-voting-app-voting-app:latest'
 worker:
-  image: 'ilkkaanttonen/worker:latest'
+  image: 'docker/example-voting-app-worker:latest'
 {% endhighlight %}
 </figure>
 
-The lines 3-10 and 11-18 define the loadbalancers. With the role *global* they get access to the Docker Cloud endpoints so that they can autoconfigure when something changes. *Result-app* uses the official image whereas *voting-app* and *worker* use the images that were modified.
+The lines 3-10 and 11-18 define the loadbalancers. With the role *global* they get access to the Docker Cloud endpoints so that they can autoconfigure when something changes.
 
 ### Deploying the stack
 
