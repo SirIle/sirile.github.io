@@ -8,8 +8,6 @@ dl, dd, ol, ul, figure {
     padding: 0;
 }
 
-
-
 /**
  * Basic styling
  */
@@ -22,8 +20,6 @@ body {
     background-color: $background-color;
     -webkit-text-size-adjust: 100%;
 }
-
-
 
 /**
  * Set `margin-bottom` to maintain vertical rhythm
@@ -128,28 +124,19 @@ blockquote {
 pre,
 code {
     font-size: 15px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
     background-color: #f7f7f7;
-}
-
-code {
-    padding: 1px 5px;
+    margin-bottom: 0;
 }
 
 pre {
     padding: 8px 12px;
-    overflow-x: scroll;
 
     > code {
         border: 0;
         padding-right: 0;
         padding-left: 0;
-    }
-
+      }
 }
-
-
 
 /**
  * Wrapper
@@ -220,16 +207,23 @@ pre {
   filter: alpha(opacity=$opacity-ie); //IE8
 }
 
-// having a lineno-container made it easier to style line number
-// code blocks without impacting normal code blocks
-.lineno-container > figure > pre {
-  padding: 0px;
-    td {
-      border:1px solid #fff;
-    }
-}
-
 .highlight {
+
+  overflow-x: auto;
+  margin-bottom: $spacing-unit / 2;
+
+  table {
+    width: 100%;
+  }
+
+  .gutter {
+      width: 10px;
+      border-color: #ccc;
+  }
+
+  .code {
+    border-color: #ccc;
+  }
 
   pre.lineno {
     border: none;
@@ -240,14 +234,4 @@ pre {
     @include unselectable();
   }
 
-  .gutter {
-    border-right: 1px solid #ccc;
-  }
-
-  pre {
-    pre {
-      border: none;
-      margin-bottom: 0px;
-    }
-  }
 }

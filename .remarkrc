@@ -1,0 +1,8 @@
+{
+  "plugins": {
+    "remark-lint": {
+      "file-extension": false,
+      "first-heading-level": false
+    }
+  }
+}

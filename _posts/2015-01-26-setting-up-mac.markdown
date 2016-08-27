@@ -2,59 +2,62 @@
 layout: post
 title:  "Setting up a new Mac"
 ---
-This post outlines how to set up a new OS X Yosemite with sane default dotfiles and basic applications. Dotfiles are heavily influenced by [Mathias Bynes](https://github.com/mathiasbynens/dotfiles).
+
+This post outlines how to set up a new OS X Yosemite with sane default dotfiles
+and basic applications. Dotfiles are heavily influenced by [Mathias
+Bynes](https://github.com/mathiasbynens/dotfiles).
 
 ## Install brew
 
-{% highlight bash %}
+~~~bash
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-{% endhighlight %}
+~~~
 
 ## Install brewdler
 
 Updated on 9.3.2015
 
-{% highlight bash %}
+~~~bash
 brew tap Homebrew/brewdler
-{% endhighlight %}
+~~~
 
 ## Clone dotfiles
 
-{% highlight bash %}
+~~~bash
 git clone https://github.com/SirIle/dotfiles.git ~/.dotfiles
-{% endhighlight %}
+~~~
 
 ## Run brewdler
 
-{% highlight bash %}
+~~~bash
 cd .dotfiles
 brew brewdle
-{% endhighlight %}
+~~~
 
 ## Run RCM
 
-{% highlight bash %}
+~~~bash
 rcup rcrc
 rcup -f
-{% endhighlight %}
+~~~
 
 ## Make GNU bash default shell
 
-{% highlight bash %}
+~~~bash
 echo "/usr/local/bin/bash" | sudo tee -a /etc/shells
 chsh -s /usr/local/bin/bash
-{% endhighlight %}
+~~~
 
 ## Install NPM as non-root
 
-{% highlight bash %}
+~~~bash
 echo prefix=~/.node >> ~/.npmrc
 curl -L https://www.npmjs.org/install.sh | sh
-{% endhighlight %}
+~~~
 
 ## Add a ~/.extra to contain non-github stuff
 
-{% highlight bash %}
+~~~bash
 # Git credentials
 # Not in the repository, to prevent people from accidentally committing under my name
 GIT_AUTHOR_NAME="Ilkka Anttonen"
@@ -64,4 +67,4 @@ GIT_AUTHOR_EMAIL="ilkka.anttonen@accenture.com"
 GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
 git config --global user.email "$GIT_AUTHOR_EMAIL"
 git config --global credential.helper osxkeychain
-{% endhighlight %}
+~~~
