@@ -94,7 +94,7 @@ If the following command times out and fails, it's probably to do with the
 provisioning failing.
 
 ~~~bash
-docker-machine -D create -d amazonec2 --swarm --swarm-master --swarm-discovery="consul://$(docker-machine inspect --format '{{.Driver.PrivateIPAddress}}' infra-aws):8500" --engine-opt="cluster-store=consul://$(docker-machine inspect --format '{{.Driver.PrivateIPAddress}}' infra-aws):8500" --amazonec2-ami=ami-fe001292 --engine-opt="cluster-advertise=eth0:2376" swarm-0-aws
+{% raw %}docker-machine -D create -d amazonec2 --swarm --swarm-master --swarm-discovery="consul://$(docker-machine inspect --format '{{.Driver.PrivateIPAddress}}' infra-aws):8500" --engine-opt="cluster-store=consul://$(docker-machine inspect --format '{{.Driver.PrivateIPAddress}}' infra-aws):8500" --amazonec2-ami=ami-fe001292 --engine-opt="cluster-advertise=eth0:2376" swarm-0-aws{% endraw %}
 ~~~
 
 You can add debug information to see the progress of the provisioning by adding
@@ -111,7 +111,7 @@ docker $(docker-machine config swarm-0-aws) network create --driver overlay over
 Now we'll add another node to the swarm.
 
 ~~~bash
-docker-machine create -d amazonec2 --swarm --swarm-discovery="consul://$(docker-machine inspect --format '{{.Driver.PrivateIPAddress}}' infra-aws):8500" --engine-opt="cluster-store=consul://$(docker-machine inspect --format '{{.Driver.PrivateIPAddress}}' infra-aws):8500" --amazonec2-ami=ami-fe001292 --engine-opt="cluster-advertise=eth0:2376" swarm-1-aws
+{% raw %}docker-machine create -d amazonec2 --swarm --swarm-discovery="consul://$(docker-machine inspect --format '{{.Driver.PrivateIPAddress}}' infra-aws):8500" --engine-opt="cluster-store=consul://$(docker-machine inspect --format '{{.Driver.PrivateIPAddress}}' infra-aws):8500" --amazonec2-ami=ami-fe001292 --engine-opt="cluster-advertise=eth0:2376" swarm-1-aws{% endraw %}
 ~~~
 
 ## Testing connectivity
