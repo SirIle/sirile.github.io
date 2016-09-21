@@ -4,7 +4,6 @@ title: Using Docker 1.10 experimental with docker-machine and VirtualBox driver 
 commentIssueId: 5
 ---
 
-<!--lint disable -->
 {::options parse_block_html="true" /}
 <div class="toc">
 Contents

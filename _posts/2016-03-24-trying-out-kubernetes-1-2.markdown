@@ -5,7 +5,6 @@ date: '2016-03-24 12:22'
 commentIssueId: 14
 ---
 
-<!--lint disable -->
 {::options parse_block_html="true" /}
 <div class="toc">
 Contents

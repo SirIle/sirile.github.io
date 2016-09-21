@@ -4,7 +4,6 @@ title: "Switching to Alpine from BusyBox"
 date: "2015-07-20 10:37"
 ---
 
-<!--lint disable -->
 {::options parse_block_html="true" /}
 <div class="toc">
 Contents

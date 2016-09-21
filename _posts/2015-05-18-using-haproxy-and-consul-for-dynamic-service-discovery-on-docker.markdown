@@ -5,7 +5,6 @@ date: '2015-05-18 14:08'
 commentIssueId: 2
 ---
 
-<!--lint disable -->
 {::options parse_block_html="true" /}
 <div class="toc">
 Contents
@@ -60,8 +59,8 @@ The following requirements were identified when starting
 -   Automatic configuration when services are spawned or destroyed
 -   Logging to stdout so that logs can easily be harvested
 -   Support for vertical and horizontal scaling
-     -   Many instances of a service on one or many nodes
-     -   Multiple nodes and requests proxied across the nodes
+    -   Many instances of a service on one or many nodes
+    -   Multiple nodes and requests proxied across the nodes
 -   Support for versioned services
 -   Support for different types of load balanced entities (start with rest/http)
 
