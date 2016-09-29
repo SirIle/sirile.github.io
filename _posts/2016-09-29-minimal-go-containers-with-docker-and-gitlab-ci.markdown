@@ -109,6 +109,20 @@ can be tested with hitting it with browser.
 
 ## Building with go-lang-builder
 
+### Base dockerfile
+
+Go-lang-builder expects a Dockerfile to be present in the directory. In this
+example it looks like
+
+~~~bash
+FROM scratch
+EXPOSE 80
+COPY go-image-test /
+ENTRYPOINT ["/go-image-test"]
+~~~
+
+### Creating the image
+
 If you are using Docker for Mac or Docker for Windows (or just DockerToolBox)
 and have the environment set up so that the docker client points to a
 Docker engine, building an image is done with
@@ -123,7 +137,7 @@ This expects the project directory structure to match what is described at
 If you want to minimize and tag the image straight after build, the command is
 
 ~~~bash
-docker run --rm -v "$(pwd):/src" -v /var/run/docker.sock:/var/run/docker.sock -e COMPRESS_BINARY=true centurylink/golang-builder sirile/go-image-test
+docker run --rm -v "$(pwd):/src" -v /var/run/docker.sock:/var/run/docker.sock -e COMPRESS_BINARY=true centurylink/golang-builder go-image-test
 ~~~
 
 ### Running locally
