@@ -211,23 +211,25 @@ pre {
 
   overflow-x: auto;
   margin-bottom: $spacing-unit / 2;
+  padding: 0;
 
   table {
     width: 100%;
   }
 
-  .gutter {
+  .rouge-gutter {
       width: 10px;
       border-color: #ccc;
   }
 
-  .code {
+  .rouge-code {
     border-color: #ccc;
   }
 
   pre.lineno {
     border: none;
     @include opacity(0.6);
+    text-align: right;
   }
 
   .lineno {
