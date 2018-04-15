@@ -49,6 +49,17 @@ echo "/usr/local/bin/bash" | sudo tee -a /etc/shells
 chsh -s /usr/local/bin/bash
 ~~~
 
+## Install nvm
+
+Node Version Manager doesn't support installation through Brew, so it's better
+to install it from the command line.
+
+~~~bash
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | bash
+~~~
+
+For me it gave an error before I created the _~/.nvm_ directory first.
+
 ## Add a ~/.extra to contain non-github stuff
 
 ~~~bash
