@@ -92,8 +92,8 @@ spec:
 
 After applying the configuration, the running pod information can be found with `kubectl get pods -n
 echo`. A port can be forwarded to the running pod with `kubectl port-forward -n echo pod/<pod-name>
-8080:80`. Then point a browser to [http://localhost:8080] and you should see the echo give a reply
-back.
+8080:80`. Then point a browser to [http://localhost:8080](http://localhost:8080) and you should see
+the echo give a reply back.
 
 ### Service
 
@@ -157,7 +157,7 @@ metadata:
   namespace: echo
 spec:
   hosts:
-    - "*" # Wildcard can be used as we don't have mesh in the gateways 
+    - "*" # Wildcard can be used as we don't have mesh in the gateways
   gateways:
     - istio-system/ingressgateway
   http:
@@ -212,7 +212,7 @@ spec:
             - containerPort: 80
 ```
 
-### Destination
+### Destination v2
 
 Destination is updated to also include v2.
 
@@ -233,7 +233,7 @@ spec:
         version: v2
 ```
 
-### VirtualService
+### VirtualService v2
 
 VirtualService is updated to distribute load to both v1 and v2. This set-up will also distribute
 traffic correctly from inside of the service mesh by including it as a gateway. That means that
