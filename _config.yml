@@ -2,8 +2,7 @@
 title: Musings about technology
 email: ilkka.anttonen@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
-  Random articles about random things, mainly on technology. At first
-  a lot will have to do with containers (Docker).
+  Random articles about random things, mainly on technology.
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://sirile.github.io" # the base hostname & protocol for your site
 twitter_username: ilkkaanttonen
