@@ -1,0 +1,50 @@
+/* Custom styling - accent color + monospace headings */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+    --accent: #e08a2e;
+    --accent-dark: #d4781a;
+}
+
+/* Monospace headings for that "this person codes" feel */
+h1, h2, h3, h4, h5, h6,
+.post-title,
+.entry-hint-parent {
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: -0.02em;
+}
+
+/* Accent color throughout */
+a {
+    color: var(--accent);
+}
+
+.dark a {
+    color: var(--accent);
+}
+
+a:hover {
+    color: var(--accent-dark);
+}
+
+.post-title {
+    color: var(--accent);
+}
+
+/* Subtle code block styling */
+.highlight {
+    border-left: 3px solid var(--accent);
+}
+
+/* Homepage title styling */
+.first-entry .entry-header h2 {
+    font-size: 1.4em;
+}
+
+/* Profile image on homepage */
+.home-info .entry-content img {
+    border-radius: 50%;
+    max-width: 120px;
+    margin-bottom: 1em;
+}

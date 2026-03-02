@@ -1,0 +1,76 @@
+baseURL = "https://sirile.github.io/"
+languageCode = "en-us"
+title = "Musings about technology"
+theme = "PaperMod"
+paginate = 10
+enableRobotsTXT = true
+
+[params]
+  author = "Ilkka Anttonen"
+  description = "Random articles about random things, mainly on technology."
+  ShowReadingTime = true
+  ShowShareButtons = false
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowToc = true
+  TocOpen = false
+  defaultTheme = "auto"
+
+  [params.homeInfoParams]
+    Title = "Musings about technology"
+    Content = "Find the actual problem. Solve it with the simplest effective approach. Don't be afraid to adopt new tools when they're genuinely better."
+
+  [params.profileMode]
+    enabled = false
+
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/SirIle"
+  [[params.socialIcons]]
+    name = "linkedin"
+    url = "https://www.linkedin.com/in/ilkka-anttonen"
+  [[params.socialIcons]]
+    name = "bluesky"
+    url = "https://bsky.app/profile/sirile.bsky.social"
+  [[params.socialIcons]]
+    name = "rss"
+    url = "/index.xml"
+
+[markup]
+  [markup.highlight]
+    lineNos = true
+    lineNumbersInTable = true
+    style = "monokai"
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+  [markup.goldmark.renderer]
+    unsafe = true
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+[[menus.main]]
+  name = "About"
+  url = "/about/"
+  weight = 10
+
+[[menus.main]]
+  name = "Archive"
+  url = "/archives/"
+  weight = 20
+
+[[menus.main]]
+  name = "Tags"
+  url = "/tags/"
+  weight = 30
+
+[[menus.main]]
+  name = "Search"
+  url = "/search/"
+  weight = 40
