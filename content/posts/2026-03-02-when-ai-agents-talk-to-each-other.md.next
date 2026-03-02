@@ -1,0 +1,191 @@
+---
+title: "When AI agents talk to each other: building a bridge between two agent systems"
+date: 2026-03-02
+draft: true
+tags: ["ai", "agents", "strands", "bedrock", "mcp", "multi-agent"]
+ShowToc: true
+TocOpen: false
+---
+
+I've been building a multi-agent system I call *agent-team* — a platform where specialized AI agents collaborate on projects, each with their own role, tools, and personality. Think of it as a simulated development team where a coordinator agent manages architects, developers, testers, and other specialists.
+
+Along the way, I ran into a problem that I think anyone building multi-agent systems will eventually face: **how do you connect agents that live in different systems?**
+
+This post is about the bridge I built between [Kiro CLI](https://kiro.dev) (where I do most of my development work) and the agent-team system. It's also about the biggest lesson I've learned so far: spend the time to build proper testing and simulation infrastructure early, because the human-in-the-loop bottleneck will kill your velocity.
+
+## The setup
+
+The agent-team runs as a local service — a FastAPI backend with a SvelteKit frontend, SQLite for persistence, and [Strands Agents SDK](https://github.com/strands-agents/sdk-python) for the AI agents, all running on [Amazon Bedrock](https://aws.amazon.com/bedrock/). Each agent has a three-layer prompt system (framework rules → role context → project prompt) and access to specific tools based on their role.
+
+On the other side, I have Kiro CLI — an AI-powered development assistant that I use for everything from writing code to researching documentation. It has its own agent system with specialized subagents.
+
+The two systems didn't know about each other. I wanted them to.
+
+## First attempt: just use the REST API
+
+The agent-team already had a REST API, so the obvious first step was to call it directly from Kiro. Send a message, poll for a response, done.
+
+```bash
+# Send a message to the agent-team
+curl -X POST "http://localhost:8000/api/external/{project_id}/message" \
+  -H "Content-Type: application/json" \
+  -d '{"content": "@Morgan Can you check the combat tracker?", "agent_id": "..."}'
+```
+
+This worked, technically. But it was clunky. Every interaction required knowing channel IDs, agent IDs, and the right threading parameters. And there was no good way for Kiro's agents to discover what channels and agents existed.
+
+## Enter MCP: the agent-to-agent protocol
+
+[Model Context Protocol (MCP)](https://modelcontextprotocol.io/) turned out to be the right abstraction. It's a standard for giving AI agents access to tools, and it works over stdio — perfect for local development.
+
+I wrote an MCP server that wraps the REST API and exposes it as a set of tools:
+
+```python
+# mcp_server.py — simplified
+@server.tool()
+async def send_message(channel: str, content: str, thread_id: str = None) -> str:
+    """Send a message to an agent-team channel."""
+    # Resolve channel name to ID, post via REST API
+    ...
+
+@server.tool()
+async def wait_for_reply(message_id: str, thread_id: str, channel: str, timeout: int = 60) -> str:
+    """Wait for an agent to respond to a message."""
+    # Poll until a new message appears in the thread
+    ...
+```
+
+Now any MCP-capable agent can talk to the agent-team by calling `send_message` and `wait_for_reply`. No need to know about HTTP endpoints or UUIDs.
+
+## The liaison agent: a dedicated bridge
+
+Rather than giving every Kiro agent direct access to the MCP server, I created a dedicated **liaison agent** — a lightweight specialist whose only job is to relay messages between the two systems.
+
+```json
+{
+  "name": "liaison",
+  "description": "Bridge between Kiro and agent-team via MCP",
+  "mcpServers": {
+    "agent-team": {
+      "command": "python3",
+      "args": ["mcp_server.py"]
+    }
+  }
+}
+```
+
+The workflow is simple:
+
+1. A Kiro agent asks the liaison to relay a message
+2. The liaison calls `send_message` on the appropriate channel
+3. It calls `wait_for_reply` to get the response
+4. It relays the response back
+
+This separation turned out to be important. The liaison handles all the protocol details — channel discovery, threading, timeout handling — so the other agents don't have to care. It's the same pattern as having a dedicated API gateway in a microservices architecture.
+
+## The real breakthrough: closing the feedback loop
+
+Here's where it gets interesting. Once the bridge was working, I could do something that dramatically changed my development workflow: **I could ask the agent-team's coordinator what tools it needed, then implement them, and have the team test them in real time.**
+
+The conversation would go something like this:
+
+> **Me (via Kiro):** "@Morgan, what tools would help you run combat encounters more smoothly?"
+>
+> **Morgan (coordinator):** "I keep having to manually track initiative order and HP. Tools for `start_combat`, `roll_initiative`, and `apply_damage` would help a lot. Also, the players can't see the battle map from their perspective — a `get_player_view` with fog of war would be great."
+>
+> **Me:** *implements the tools*
+>
+> **Me (via Kiro):** "@Morgan, I've added `start_combat` and `roll_initiative`. Can you try running a test encounter?"
+>
+> **Morgan:** *runs the encounter, reports what works and what doesn't*
+
+This loop — ask → implement → test → iterate — running across two agent systems in real time, was genuinely faster than any development workflow I've used before. The coordinator became both the requirements source and the QA tester.
+
+## The biggest lesson: invest in testing infrastructure
+
+If I could go back and change one thing, I'd build the testing and simulation framework earlier. Much earlier.
+
+The human-in-the-loop bottleneck is real. When every test requires you to manually trigger an interaction, watch the output, and verify the result, you become the slowest part of the system. I spent too long in that mode before building proper infrastructure.
+
+What eventually worked:
+
+**A simulation framework** that lets agents test tools without human intervention:
+
+```python
+# Setup a test encounter with one call
+setup_test_session(
+    campaign="test-campaign",
+    characters=["Fighter", "Wizard", "Rogue"],
+    encounter="goblin_ambush"
+)
+
+# Assert state after agent actions
+assert_state(combat_active=True, initiative_count=6)
+```
+
+**The liaison bridge itself** became a testing tool. I could script interactions:
+
+```python
+# Send a message and wait for the coordinator's response
+response = send_message(channel="testing", content="@Morgan run a test combat")
+reply = wait_for_reply(message_id=response["message_id"], timeout=120)
+```
+
+**State snapshots and diffs** logged on every tool call, so I could see exactly what changed:
+
+```json
+{"tool": "apply_damage", "target": "Goblin_1", "damage": 8,
+ "state_diff": {"hp": {"before": 12, "after": 4}}}
+```
+
+The pattern I'd recommend: before building your tenth agent tool, build the framework that lets agents test tools themselves. The investment pays for itself within days.
+
+## Context memory: how agents remember
+
+One more piece that made the bridge useful: persistent context memory. Without it, every conversation started from scratch. The coordinator would forget what tools were available, what the current project state was, everything.
+
+The solution is a scored memory system. Agents can store context entries with a priority score, and the most relevant entries are automatically injected into their system prompt before each LLM call:
+
+```python
+# Agent stores a memory
+add_context(
+    content="Combat tracker supports fog of war via get_player_view",
+    entry_type="note",
+    scope="project",
+    priority=7
+)
+```
+
+Entries decay over time (a time-weighted scoring function) so stale information naturally drops out. Pinned entries stay permanently. The system enforces a token budget so the prompt doesn't grow unbounded.
+
+This is one of those things that seems optional until you try working without it. Agents without memory are like developers who can't take notes — they keep asking the same questions.
+
+## What I'd do differently
+
+**Start with the bridge.** I built the agent-team as a standalone system first and added the bridge later. In hindsight, the ability to interact with the system from outside — programmatically, not just through the UI — should have been a day-one feature.
+
+**Build testing infrastructure before building features.** Every hour spent on the simulation framework saved ten hours of manual testing later.
+
+**Use a real database from the start.** I started with in-memory state and migrated to SQLite later. The migration wasn't terrible (thanks to SQLAlchemy and Alembic), but having persistent state from the beginning would have avoided some painful debugging sessions.
+
+**Keep the coordinator's prompt lean.** The three-layer prompt system works well, but it's tempting to keep adding instructions. A coordinator with a 4000-token system prompt makes worse decisions than one with 1500 tokens of focused guidance.
+
+## The stack
+
+For anyone curious about the specific technologies:
+
+- **AI:** Amazon Bedrock (Claude Opus for coordinator, Sonnet for agents) via Strands Agents SDK
+- **Backend:** Python, FastAPI, SQLAlchemy, SQLite
+- **Frontend:** SvelteKit
+- **Bridge:** MCP (Model Context Protocol) over stdio
+- **Infrastructure:** Terraform for IAM, local-first development
+
+## What's next
+
+The bridge pattern opens up possibilities I'm still exploring. Multiple agent systems collaborating on the same project. Agents that can delegate subtasks to specialized external systems. A coordinator that can spin up temporary specialist agents on demand.
+
+The multi-agent space is moving fast, and I think the systems that win will be the ones that can compose — not monolithic agent platforms, but networks of specialized systems that talk to each other. The bridge is the first step.
+
+---
+
+*If you're building multi-agent systems on AWS, I'd love to hear about your approach — find me on [LinkedIn](https://www.linkedin.com/in/ilkka-anttonen) or [Bluesky](https://bsky.app/profile/sirile.bsky.social).*

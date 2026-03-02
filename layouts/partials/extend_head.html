@@ -1,1 +1,29 @@
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ab500e8e0c634b18bcfdf5f964733abc"}'></script><!-- End Cloudflare Web Analytics -->
+<!-- Mermaid diagrams -->
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: document.body.classList.contains('dark') ? 'dark' : 'default',
+    themeVariables: { primaryColor: '#e08a2e', primaryTextColor: '#fff' }
+  });
+</script>
+<!-- GLightbox for image zoom -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3/dist/css/glightbox.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/glightbox@3/dist/js/glightbox.min.js"></script>
+<script defer>
+  window.addEventListener('load', function() {
+    if (typeof GLightbox !== 'undefined') {
+      document.querySelectorAll('.post-content img:not(.mermaid img)').forEach(function(img) {
+        if (!img.closest('a')) {
+          var a = document.createElement('a');
+          a.href = img.src;
+          a.classList.add('glightbox');
+          img.parentNode.insertBefore(a, img);
+          a.appendChild(img);
+        }
+      });
+      GLightbox({ selector: '.glightbox' });
+    }
+  });
+</script>

@@ -1,0 +1,12 @@
+{{ $images := split (.Get "images") "," }}
+{{ $captions := split (.Get "captions") "|" }}
+<div class="gallery" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:0.8em; margin:1.5em 0;">
+{{ range $i, $img := $images }}
+  <figure style="margin:0;">
+    <a href="{{ strings.TrimSpace $img }}" class="glightbox" data-gallery="gallery" {{ with index $captions $i }}data-description="{{ strings.TrimSpace . }}"{{ end }}>
+      <img src="{{ strings.TrimSpace $img }}" style="width:100%; border-radius:6px; cursor:zoom-in;" loading="lazy" />
+    </a>
+    {{ with index $captions $i }}<figcaption style="font-size:0.85em; color:#888; margin-top:0.3em; text-align:center;">{{ strings.TrimSpace . }}</figcaption>{{ end }}
+  </figure>
+{{ end }}
+</div>
