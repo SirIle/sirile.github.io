@@ -35,6 +35,12 @@ enableRobotsTXT = true
     Title = "Musings about technology"
     Content = "Find the actual problem. Solve it with the simplest effective approach. Don't be afraid to adopt new tools when they're genuinely better."
 
+  [params.cover]
+    image = "images/banner.png"
+    alt = "Network of connected nodes"
+    hidden = false
+    hiddenInSingle = true
+
   [params.profileMode]
     enabled = false
 
