@@ -16,6 +16,20 @@ enableRobotsTXT = true
   ShowToc = true
   TocOpen = false
   defaultTheme = "auto"
+  comments = true
+
+  [params.giscus]
+    repo = "SirIle/sirile.github.io"
+    repoID = "MDEwOlJlcG9zaXRvcnkyNzE1MDE0OA=="
+    category = "General"
+    categoryID = "DIC_kwDOAZ5HRM4C3hmR"
+    mapping = "pathname"
+    reactionsEnabled = "1"
+    emitMetadata = "0"
+    inputPosition = "top"
+    theme = "preferred_color_scheme"
+    lang = "en"
+    loading = "lazy"
 
   [params.homeInfoParams]
     Title = "Musings about technology"
