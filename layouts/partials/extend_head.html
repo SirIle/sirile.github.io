@@ -2,10 +2,47 @@
 <!-- Mermaid diagrams -->
 <script type="module">
   import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+  function getMermaidTheme() {
+    const isDark = document.body.classList.contains('dark') ||
+      (localStorage.getItem('pref-theme') === 'dark') ||
+      (!localStorage.getItem('pref-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    return isDark ? 'dark' : 'default';
+  }
+
   mermaid.initialize({
     startOnLoad: true,
-    theme: document.body.classList.contains('dark') ? 'dark' : 'default',
+    theme: getMermaidTheme(),
     themeVariables: { primaryColor: '#e08a2e', primaryTextColor: '#fff' }
+  });
+
+  // Re-render on theme toggle
+  const toggle = document.getElementById('theme-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', async () => {
+      await new Promise(r => setTimeout(r, 50));
+      const nodes = document.querySelectorAll('.mermaid');
+      nodes.forEach(el => {
+        el.removeAttribute('data-processed');
+        const svg = el.querySelector('svg');
+        if (svg) {
+          el.innerHTML = el.getAttribute('data-original') || el.textContent;
+        }
+      });
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: getMermaidTheme(),
+        themeVariables: { primaryColor: '#e08a2e', primaryTextColor: '#fff' }
+      });
+      await mermaid.run({ nodes });
+    });
+  }
+
+  // Store original source for re-rendering
+  document.querySelectorAll('.mermaid').forEach(el => {
+    if (!el.getAttribute('data-original')) {
+      el.setAttribute('data-original', el.textContent);
+    }
   });
 </script>
 <!-- GLightbox for image zoom -->
