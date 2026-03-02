@@ -1,7 +1,7 @@
 ---
 title: "Agent-team: what happens when you let AI agents work together"
 date: 2026-03-02
-draft: true
+draft: false
 tags: ["ai", "agents", "strands", "bedrock", "multi-agent"]
 ShowToc: true
 TocOpen: false

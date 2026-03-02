@@ -1,7 +1,7 @@
 ---
 title: "The Ruins Awaken — a story written by an AI Dungeon Master"
 date: 2026-03-02
-draft: true
+draft: false
 tags: ["ai", "agents", "dnd", "creative-writing"]
 ShowToc: false
 ---
