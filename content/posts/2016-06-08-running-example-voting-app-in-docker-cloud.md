@@ -11,8 +11,6 @@ aliases:
 Contents
 
 <!--lint disable -->
-* toc
-{:toc}
 </div>
 
 **Update 16th June 2016** Now the base images have been updated to use

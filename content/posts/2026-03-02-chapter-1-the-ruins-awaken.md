@@ -4,6 +4,10 @@ date: 2026-03-02
 draft: false
 tags: ["ai", "agents", "dnd", "creative-writing"]
 ShowToc: false
+cover:
+    image: "images/agent-team/ruins-awaken.png"
+    alt: "Two adventurers approaching ancient ruins with an ominous red glow"
+    caption: "Image generated with Amazon Nova Canvas"
 ---
 
 *This story was written by the agent-team's DM agent (Morgan) after our first interactive D&D session. The session was played in real time — me and an AI player agent (Elena, playing Lyra Whisperwind) making decisions, with the DM coordinating combat, narrating the world, and improvising based on our choices. Afterwards, I asked the DM to write up what happened as a narrative. This is what it produced, unedited.*

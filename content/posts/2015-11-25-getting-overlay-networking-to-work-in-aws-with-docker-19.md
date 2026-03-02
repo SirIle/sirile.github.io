@@ -11,8 +11,6 @@ aliases:
 Contents
 
 <!--lint disable -->
-* toc
-{:toc}
 </div>
 
 **Update on 4.12.2015** Docker-machine 0.5.2 has been released and it works

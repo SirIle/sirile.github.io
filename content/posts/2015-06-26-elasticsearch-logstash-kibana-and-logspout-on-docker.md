@@ -11,8 +11,6 @@ aliases:
 Contents
 
 <!--lint disable -->
-* toc
-{:toc}
 </div>
 
 **Update on 20th of July 2015!** As the BusyBox image's package manager opkg

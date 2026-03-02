@@ -11,8 +11,6 @@ aliases:
 Contents
 
 <!--lint disable -->
-* toc
-{:toc}
 </div>
 
 **Update on 20.11.2015** New experimental version is 1.10. The image can be

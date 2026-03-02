@@ -11,8 +11,6 @@ aliases:
 Contents
 
 <!--lint disable -->
-* toc
-{:toc}
 </div>
 
 **Update on 5.8.2015!** The scripts have been updated so that the examples can

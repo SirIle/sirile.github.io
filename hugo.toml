@@ -39,7 +39,7 @@ enableRobotsTXT = true
     image = "images/banner.png"
     alt = "Network of connected nodes"
     hidden = false
-    hiddenInSingle = true
+    hiddenInSingle = false
 
   [params.profileMode]
     enabled = false
