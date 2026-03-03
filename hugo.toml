@@ -81,6 +81,11 @@ enableRobotsTXT = true
   weight = 10
 
 [[menus.main]]
+  name = "CV"
+  url = "/cv/"
+  weight = 15
+
+[[menus.main]]
   name = "Archive"
   url = "/archives/"
   weight = 20

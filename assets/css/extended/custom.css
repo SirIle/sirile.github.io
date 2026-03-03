@@ -48,3 +48,35 @@ a:hover {
     max-width: 120px;
     margin-bottom: 1em;
 }
+
+/* CV page specific styling */
+.cv-page h2 {
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.2em;
+    margin-top: 1.8em;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.cv-page h3 {
+    color: var(--primary);
+    font-size: 1em;
+    margin-bottom: 0.1em;
+}
+
+.cv-page h3 + em {
+    color: #888;
+    font-size: 0.9em;
+}
+
+.cv-page hr {
+    border-color: var(--accent);
+    opacity: 0.3;
+    margin: 1.5em 0;
+}
+
+.cv-page table {
+    width: 100%;
+    font-size: 0.9em;
+}
