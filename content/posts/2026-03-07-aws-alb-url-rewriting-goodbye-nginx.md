@@ -5,6 +5,10 @@ draft: false
 tags: ["aws", "eks", "kubernetes", "alb", "nginx", "ingress"]
 ShowToc: true
 TocOpen: false
+cover:
+    image: "images/eks/alb-hero.png"
+    alt: "Network complexity transitioning to simplicity"
+    caption: "Image generated with Amazon Nova Canvas"
 ---
 
 If you've run services on EKS, you've probably had the same frustration I have: AWS Application Load Balancer is great for TLS termination and routing, but the moment you need URL rewriting, you're stuck deploying nginx as a reverse proxy behind it. Two load balancers, an extra pod to maintain, and one more thing to patch.
