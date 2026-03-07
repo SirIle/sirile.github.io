@@ -11,9 +11,9 @@ cover:
     caption: "The agent-team in their natural habitat (image generated with Amazon Nova Canvas)"
 ---
 
-I wanted to understand how AI agents collaborate. Not in theory — I've read the papers — but in practice. What happens when you give a group of agents different roles, let them discuss, and have a human sit in as part of the team?
+I wanted to understand how AI agents collaborate. Not in theory – I've read the papers – but in practice. What happens when you give a group of agents different roles, let them discuss, and have a human sit in as part of the team?
 
-So I built a system to find out. I call it *agent-team*, and it's been my evenings-and-weekends project for the past couple of months. It's a platform where AI agents with distinct roles — a coordinator, developers, testers, a lore master, whoever the project needs — work together on shared projects, communicating through persistent channels and threads, with a human participating as a team member rather than just an operator.
+So I built a system to find out. I call it *agent-team*, and it's been my evenings-and-weekends project for the past couple of months. It's a platform where AI agents with distinct roles – a coordinator, developers, testers, a lore master, whoever the project needs – work together on shared projects, communicating through persistent channels and threads, with a human participating as a team member rather than just an operator.
 
 This post is an introduction to what it is, why I built it, and what I've learned so far.
 
@@ -30,13 +30,13 @@ I wanted to explore a few questions:
 
 ## What it looks like
 
-Agent-team runs locally — a Python backend with a SvelteKit frontend. The agents run on [Amazon Bedrock](https://aws.amazon.com/bedrock/) via the [Strands Agents SDK](https://github.com/strands-agents/sdk-python). Everything is stored in SQLite, so conversations persist across sessions.
+Agent-team runs locally – a Python backend with a SvelteKit frontend. The agents run on [Amazon Bedrock](https://aws.amazon.com/bedrock/) via the [Strands Agents SDK](https://github.com/strands-agents/sdk-python). Everything is stored in SQLite, so conversations persist across sessions.
 
 The system is organized around a few concepts borrowed from tools we all use daily:
 
 **Projects** are workspaces for a specific goal. I've been running two: a software development simulation and a D&D campaign (more on that in a moment).
 
-**Channels** are focused areas within a project — like Slack channels. A software project might have `#architecture`, `#development`, and `#testing`. A D&D campaign has `#adventure`, `#world-building`, and `#tool-development`.
+**Channels** are focused areas within a project – like Slack channels. A software project might have `#architecture`, `#development`, and `#testing`. A D&D campaign has `#adventure`, `#world-building`, and `#tool-development`.
 
 **Threads** are conversations within channels. They have auto-generated summaries so you can scan what's been discussed without reading everything.
 
@@ -67,10 +67,10 @@ Getting agents to behave consistently in their roles took some iteration. I ende
 <div class="mermaid">
 graph TB
     subgraph " "
-        L1["1️⃣ System Prompt — Framework rules, communication patterns"]
-        L2["2️⃣ Role Context — Agent personality, domain expertise"]
-        L3["3️⃣ Project Prompt — Channel-specific instructions"]
-        M["🧠 Context Memory — Auto-injected scored entries"]
+        L1["1️⃣ System Prompt – Framework rules, communication patterns"]
+        L2["2️⃣ Role Context – Agent personality, domain expertise"]
+        L3["3️⃣ Project Prompt – Channel-specific instructions"]
+        M["🧠 Context Memory – Auto-injected scored entries"]
         L1 --> L2 --> L3 --> M
     end
     style L1 fill:#444,color:#fff
@@ -79,11 +79,11 @@ graph TB
     style M fill:#10B981,color:#fff
 </div>
 
-1. **System prompt** — framework-level rules that all agents share. Communication patterns, tool usage guidelines, response style.
-2. **Role context** — the agent's general personality and expertise. "You are the project architect. You care about maintainability and make decisions based on trade-offs, not dogma."
-3. **Project prompt** — channel-specific instructions that can change per conversation. "This channel is for the D&D adventure. Stay in character."
+1. **System prompt** – framework-level rules that all agents share. Communication patterns, tool usage guidelines, response style.
+2. **Role context** – the agent's general personality and expertise. "You are the project architect. You care about maintainability and make decisions based on trade-offs, not dogma."
+3. **Project prompt** – channel-specific instructions that can change per conversation. "This channel is for the D&D adventure. Stay in character."
 
-All three layers are stored in the database and read before each LLM call, so I can tweak an agent's behavior without restarting anything. The coordinator can even edit other agents' role context and project prompts — which leads to interesting emergent behavior when it decides an agent needs to adjust its focus or approach mid-project. It can also create new agents on the fly and pull them into channels when the project needs a specialist that doesn't exist yet.
+All three layers are stored in the database and read before each LLM call, so I can tweak an agent's behavior without restarting anything. The coordinator can even edit other agents' role context and project prompts – which leads to interesting emergent behavior when it decides an agent needs to adjust its focus or approach mid-project. It can also create new agents on the fly and pull them into channels when the project needs a specialist that doesn't exist yet.
 
 ## D&D as a stress test
 
@@ -91,33 +91,33 @@ I needed a complex, open-ended scenario to push the system. Software development
 
 A D&D session requires:
 
-- **State management** — character stats, inventory, world state, combat positions
-- **Turn-based coordination** — initiative order, action resolution, reactions
-- **Creative collaboration** — the DM improvises, players make unexpected choices
-- **Persistent memory** — what happened three sessions ago matters today
-- **Multiple views** — a story narrative view for exploration, a tactical battle map for combat, character sheets for reference
+- **State management** – character stats, inventory, world state, combat positions
+- **Turn-based coordination** – initiative order, action resolution, reactions
+- **Creative collaboration** – the DM improvises, players make unexpected choices
+- **Persistent memory** – what happened three sessions ago matters today
+- **Multiple views** – a story narrative view for exploration, a tactical battle map for combat, character sheets for reference
 
-The system now has a coordinator who acts as DM, a player agent (Elena, playing a half-elf ranger named Lyra), and me as another player. The DM manages combat with tools for initiative tracking, damage resolution, spell range checking, and fog-of-war player views. There are themed views — a story mode for narrative scenes and a battle view with widgets showing the map, initiative order, and party HP.
+The system now has a coordinator who acts as DM, a player agent (Elena, playing a half-elf ranger named Lyra), and me as another player. The DM manages combat with tools for initiative tracking, damage resolution, spell range checking, and fog-of-war player views. There are themed views – a story mode for narrative scenes and a battle view with widgets showing the map, initiative order, and party HP.
 
-{{< gallery images="/images/agent-team/story-view.png,/images/agent-team/character-sheet.png" captions="Story view — the DM presents choices in a parchment-themed interface|Character sheet with AI-generated portrait and the team panel" >}}
+{{< gallery images="/images/agent-team/story-view.png,/images/agent-team/character-sheet.png" captions="Story view – the DM presents choices in a parchment-themed interface|Character sheet with AI-generated portrait and the team panel" >}}
 
 It's been genuinely fun, and it's surfaced edge cases I never would have found with a more structured test scenario.
 
-{{< gallery images="/images/agent-team/world-map.png" captions="Interactive world map — zoomable with toggleable layers for rivers, roads, cities, and DM notes" >}}
+{{< gallery images="/images/agent-team/world-map.png" captions="Interactive world map – zoomable with toggleable layers for rivers, roads, cities, and DM notes" >}}
 
-After our first session, I asked the DM to write up what happened as a narrative. The result was surprisingly good — here's how it opens:
+After our first session, I asked the DM to write up what happened as a narrative. The result was surprisingly good – here's how it opens:
 
-> *The ancient stones jutted from the earth like broken teeth, half-swallowed by centuries of forest growth. Lyra Whisperwind paused at the entrance to the ruins, her amber eyes studying the worn carvings that framed the doorway — symbols that spoke of a time when these halls had been a place of worship, before darkness had claimed them.*
+> *The ancient stones jutted from the earth like broken teeth, half-swallowed by centuries of forest growth. Lyra Whisperwind paused at the entrance to the ruins, her amber eyes studying the worn carvings that framed the doorway – symbols that spoke of a time when these halls had been a place of worship, before darkness had claimed them.*
 >
 > *"The villagers were right to be afraid," she murmured, fingers tracing a glyph that made her skin prickle with residual magic. "Something has awakened here."*
 
-You can read the [full chapter here](/posts/2026-03-02-chapter-1-the-ruins-awaken/) — it's unedited output from the DM agent, based entirely on what we played through interactively.
+You can read the [full chapter here](/posts/2026-03-02-chapter-1-the-ruins-awaken/) – it's unedited output from the DM agent, based entirely on what we played through interactively.
 
 ## The coordinator: keeping agents productive
 
 Giving agents the ability to discuss freely sounds great in theory. In practice, it needs a referee.
 
-The coordinator agent (Morgan) has a special role: it manages the team, delegates tasks, tags specific agents into conversations with @mentions, and — critically — decides when a discussion is done and it's time to act. It can also pause a thread to wait for human input before proceeding.
+The coordinator agent (Morgan) has a special role: it manages the team, delegates tasks, tags specific agents into conversations with @mentions, and – critically – decides when a discussion is done and it's time to act. It can also pause a thread to wait for human input before proceeding.
 
 This turned out to be essential, because without it, agents develop some entertainingly unproductive habits.
 
@@ -137,17 +137,17 @@ This turned out to be essential, because without it, agents develop some enterta
 
 The fix was giving the coordinator authority to cut discussions short: "We've discussed enough. @Developer, implement option 2. @Tester, write the test cases. Report back when done." Less democratic, more productive.
 
-These are the kinds of things you only learn by running the system and watching what happens. Multi-agent coordination isn't just a technical problem — it's a management problem, and the coordinator needs the same skills a good human project manager has: knowing when to let discussion flow and when to say "enough talking, start building."
+These are the kinds of things you only learn by running the system and watching what happens. Multi-agent coordination isn't just a technical problem – it's a management problem, and the coordinator needs the same skills a good human project manager has: knowing when to let discussion flow and when to say "enough talking, start building."
 
 ## Agents developing their own tools
 
 This is the part that surprised me most. The agent-team has a dedicated `#tool-development` channel where agents can discuss what tools they need, and a development agent can implement them.
 
-To give you a sense of scale: the system currently has over **250 tools**, with 214 of those being RPG-specific tools — everything from `start_combat` and `roll_initiative` to `get_player_view` (fog of war), `trace_clue_connections`, `get_weather_forecast`, and `use_legendary_action`. Almost all of them originated from the DM saying "I need a way to do X" during a session.
+To give you a sense of scale: the system currently has over **250 tools**, with 214 of those being RPG-specific tools – everything from `start_combat` and `roll_initiative` to `get_player_view` (fog of war), `trace_clue_connections`, `get_weather_forecast`, and `use_legendary_action`. Almost all of them originated from the DM saying "I need a way to do X" during a session.
 
 The workflow:
 
-1. The coordinator identifies a gap — "we need a way to track spell concentration during combat"
+1. The coordinator identifies a gap – "we need a way to track spell concentration during combat"
 2. It proposes the tool specification on the channel
 3. The development agent implements it following the project's tool patterns
 4. The coordinator tests it in a simulated scenario
@@ -157,7 +157,7 @@ Having agents participate in their own tool development creates a tight feedback
 
 ## Context memory
 
-Early on, every conversation started from scratch. The coordinator would forget what tools were available, what happened in the last session, what decisions had been made. This is the fundamental problem with LLM-based agents — the context window is a sliding window, not a persistent memory.
+Early on, every conversation started from scratch. The coordinator would forget what tools were available, what happened in the last session, what decisions had been made. This is the fundamental problem with LLM-based agents – the context window is a sliding window, not a persistent memory.
 
 The solution is a scored memory system. Agents can store context entries with a priority, and the highest-scored entries are automatically injected into their prompt before each call:
 
@@ -170,7 +170,7 @@ add_context(
 )
 ```
 
-Entries decay over time — a scoring function weighs priority against recency — so stale information naturally drops out. Important facts can be pinned to stay permanently. The system enforces a token budget so the prompt doesn't grow unbounded.
+Entries decay over time – a scoring function weighs priority against recency – so stale information naturally drops out. Important facts can be pinned to stay permanently. The system enforces a token budget so the prompt doesn't grow unbounded.
 
 It's simple, but it transforms the experience. Agents that remember feel like teammates. Agents that don't feel like strangers you have to re-brief every morning.
 
@@ -178,21 +178,21 @@ It's simple, but it transforms the experience. Agents that remember feel like te
 
 The most recent addition is a bridge that connects agent-team to external development tools. I use [Kiro CLI](https://kiro.dev) for most of my coding, and I wanted its agents to be able to communicate with the agent-team in real time.
 
-The bridge uses [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) — a standard for giving AI agents access to tools. A dedicated liaison agent handles the relay: it receives requests from Kiro, sends them to the appropriate agent-team channel, waits for a response, and relays it back.
+The bridge uses [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) – a standard for giving AI agents access to tools. A dedicated liaison agent handles the relay: it receives requests from Kiro, sends them to the appropriate agent-team channel, waits for a response, and relays it back.
 
-This closed a powerful feedback loop: I can ask the coordinator what tools it needs, implement them in Kiro, and have the team test them immediately — all without switching contexts. I'll write more about this pattern in a follow-up post.
+This closed a powerful feedback loop: I can ask the coordinator what tools it needs, implement them in Kiro, and have the team test them immediately – all without switching contexts. I'll write more about this pattern in a follow-up post.
 
 ## What I've learned
 
-**The human-in-the-loop bottleneck is real.** When every test requires manual interaction, you become the slowest part of the system. Invest early in testing and simulation infrastructure that lets agents operate without waiting for you.
+The human-in-the-loop bottleneck is real. When every test requires manual interaction, you become the slowest part of the system. Invest early in testing and simulation infrastructure that lets agents operate without waiting for you.
 
-**Agents are better at specifying tools than humans are.** When the coordinator tells you what it needs, the specification is grounded in actual usage. When I spec tools myself, I invariably miss edge cases.
+Agents are better at specifying tools than humans are. When the coordinator tells you what it needs, the specification is grounded in actual usage. When I spec tools myself, I invariably miss edge cases.
 
-**Persistence changes everything.** Agents with memory and persistent conversation history behave fundamentally differently from stateless agents. They build on previous discussions, reference past decisions, and develop something that looks remarkably like institutional knowledge.
+Persistence changes everything. Agents with memory and persistent conversation history behave differently from stateless agents. They build on previous discussions, reference past decisions, and develop what starts to look like institutional knowledge.
 
-**D&D is an excellent multi-agent test scenario.** It requires state management, creative collaboration, turn-based coordination, and long-term memory — all the hard problems in multi-agent systems, wrapped in something that's actually fun to work with.
+D&D is an excellent multi-agent test scenario. It requires state management, creative collaboration, turn-based coordination, and long-term memory – all the hard problems in multi-agent systems, wrapped in something that's actually fun to work with.
 
-**Keep the coordinator's prompt lean.** A coordinator with a 4000-token system prompt makes worse decisions than one with 1500 tokens of focused guidance. More instructions doesn't mean better behavior.
+Keep the coordinator's prompt lean. A coordinator with a 4000-token system prompt makes worse decisions than one with 1500 tokens of focused guidance. More instructions doesn't mean better behavior.
 
 ## The stack
 
@@ -204,7 +204,7 @@ This closed a powerful feedback loop: I can ask the coordinator what tools it ne
 
 ## What's next
 
-I'm planning a series of posts diving deeper into specific aspects — the bridge pattern, the context memory system, how the D&D stress test has shaped the architecture, and the tool development feedback loop. If any of those sound interesting, let me know.
+I'm planning a series of posts diving deeper into specific aspects – the bridge pattern, the context memory system, how the D&D stress test has shaped the architecture, and the tool development feedback loop. If any of those sound interesting, let me know.
 
 ---
 

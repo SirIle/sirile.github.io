@@ -37,7 +37,7 @@ With ALB, this was impossible. ALB could route based on paths, but it couldn't m
 Most people, myself included, went with option 3. So the standard EKS pattern became:
 
 ```
-Internet → ALB (TLS + routing) → nginx (URL rewrite) → Service → Pods
+Internet -> ALB (TLS + routing) -> nginx (URL rewrite) -> Service -> Pods
 ```
 
 Two hops. Two things to configure. Two things that can break.
@@ -184,7 +184,7 @@ What I kept:
 
 ## The nginx retirement
 
-The timing of this is worth noting. In November 2025, the Kubernetes SIG Network and Security Response Committee [announced](https://www.kubernetes.dev/blog/2025/11/12/ingress-nginx-retirement/) that the community Ingress NGINX controller is retiring. Best-effort maintenance continues until March 31, 2026 – after that, no releases, no bugfixes, no security patches.
+The timing matters here. In November 2025, the Kubernetes SIG Network and Security Response Committee [announced](https://www.kubernetes.dev/blog/2025/11/12/ingress-nginx-retirement/) that the community Ingress NGINX controller is retiring. Best-effort maintenance continues until March 31, 2026 – after that, no releases, no bugfixes, no security patches.
 
 This isn't about NGINX the web server (that's fine) or the commercial NGINX Ingress Controller from F5 (that's a separate product). It's specifically the community-maintained Kubernetes Ingress NGINX controller that most of us have been using.
 
@@ -196,7 +196,7 @@ A few notes from the migration:
 
 **The `transforms` annotation is per-service.** The annotation key includes the backend service name: `alb.ingress.kubernetes.io/transforms.yinyang-service`. If you have multiple backends with different rewrite rules, each gets its own annotation.
 
-**Regex syntax.** The rewrite uses standard regex. My pattern `^/yinyang/?(.*)$` → `/$1` handles both `/yinyang` and `/yinyang/` and `/yinyang/anything/else`. Test your patterns.
+**Regex syntax.** The rewrite uses standard regex. My pattern `^/yinyang/?(.*)$` -> `/$1` handles both `/yinyang` and `/yinyang/` and `/yinyang/anything/else`. Test your patterns.
 
 **AWS Load Balancer Controller version.** Make sure you're running a recent version that supports the `transforms` annotation. I'm using v2.12+ which has full support.
 
