@@ -19,15 +19,9 @@ Yes, it's building itself. I'll get to that.
 
 ## How it started
 
-The first version was simple: I'd describe what needed to happen, an external agent would break it into tasks, and the system would schedule them. Each task – called a "bead" – gets routed to the right agent role: builders write code, testers verify it, reviewers check the diff, the lead plans and makes decisions.
+I built the skeleton framework directly with kiro-cli – the scheduler, spawner, memory, and basic bead model. Once the coordination loop was functional enough to process beads, I started feeding it planning beads through kiro-cli. The lead agent would break those down into implementation, test, and review beads, and the system would execute them.
 
-Within a few days, the workflow shifted. Instead of me creating beads manually, I started giving the lead agent high-level goals:
-
-```bash
-ai-team plan -p myproject "Add knowledge graph support for non-coding projects"
-```
-
-The lead breaks this into a sequence of beads with dependencies – design first, then implement, then test, then review – and the scheduler takes over. I watch the board and intervene when something goes sideways, which happens less often than you'd expect.
+As the TUI dashboard matured (built by the system itself, naturally), I shifted to using it as the primary interface for creating planning beads. The workflow now is: I type a goal into the TUI, the lead breaks it into a sequence of beads with dependencies, and the scheduler takes over.
 
 ## The bead model
 
