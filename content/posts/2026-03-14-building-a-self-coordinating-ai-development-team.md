@@ -31,7 +31,7 @@ The lead breaks this into a sequence of beads with dependencies – design first
 
 ## The bead model
 
-Every unit of work is a bead with a type that determines which agent handles it:
+The task model is inspired by Steve Yegge's [beads](https://github.com/steveyegge/beads) – a dependency-aware graph for tracking agent work. Every unit of work is a bead with a type that determines which agent handles it:
 
 | Type | Agent | What happens |
 |---|---|---|
@@ -46,6 +46,8 @@ Every unit of work is a bead with a type that determines which agent handles it:
 | research | researcher | Deep research tasks |
 
 Beads have dependencies – a test bead is blocked until its implement bead completes. The scheduler respects these automatically and runs independent beads in parallel. The dashboard shows the current state: ready, running, blocked, done.
+
+The bead model also solves a problem I hit with every agent-to-agent communication framework I evaluated: they're all kludgy. Direct message passing between agents creates tight coupling and coordination overhead. With beads, agents don't talk to each other at all – they communicate through the linked bead graph. A builder completes a bead, a review bead gets unblocked, the reviewer picks it up. The "conversation" is the chain of beads and their outputs, not a chat thread.
 
 ## Git worktrees: how agents don't step on each other
 
