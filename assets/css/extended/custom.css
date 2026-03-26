@@ -1,18 +1,47 @@
-/* Custom styling - accent color + monospace headings */
+/* Personal style guide applied — see ~/Projects/Personal/style-guide.md */
 
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;700&display=swap');
 
 :root {
+    /* Color palette */
     --accent: #e08a2e;
     --accent-dark: #d4781a;
+    --teal: #2e8e9e;
+    --text-light: #1d1d1f;
+    --text-dark: #e8e6e3;
+    --bg-light: #fafaf8;
+    --bg-dark: #1a1a2e;
+    --muted: #6b6b6b;
 }
 
-/* Monospace headings for that "this person codes" feel */
+/* Body font: Inter */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--text-light);
+}
+
+.dark body {
+    color: var(--text-dark);
+}
+
+/* Monospace headings — the signature */
 h1, h2, h3, h4, h5, h6,
 .post-title,
 .entry-hint-parent {
     font-family: 'JetBrains Mono', monospace;
     letter-spacing: -0.02em;
+}
+
+/* Line height per style guide */
+.post-content p,
+.post-content li {
+    line-height: 1.5;
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3 {
+    line-height: 1.2;
 }
 
 /* Accent color throughout */
@@ -37,6 +66,12 @@ a:hover {
     border-left: 3px solid var(--accent);
 }
 
+/* Inline code — JetBrains Mono at slightly smaller size */
+code:not(.highlight code) {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88em;
+}
+
 /* Homepage title styling */
 .first-entry .entry-header h2 {
     font-size: 1.4em;
@@ -47,6 +82,24 @@ a:hover {
     border-radius: 50%;
     max-width: 120px;
     margin-bottom: 1em;
+}
+
+/* Muted text for metadata */
+.post-meta,
+.post-description {
+    color: var(--muted);
+}
+
+/* Tables — left-align text, right-align numbers */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9em;
+    letter-spacing: -0.01em;
 }
 
 /* CV page specific styling */

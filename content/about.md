@@ -22,12 +22,12 @@ I made a promise to myself a long time ago: if someone shows me an easier or bet
 
 ## Current Interests
 
-After over 28 years in the industry, I've found my way to the intersection of cloud architecture and agentic AI. I'm currently building multi-agent orchestration systems on AWS using [Amazon Bedrock](https://aws.amazon.com/bedrock/) and [Strands Agents SDK](https://github.com/strands-agents/sdk-python), designing how specialized AI agents collaborate to solve complex problems.
+I work at the intersection of cloud architecture and agentic AI. Right now I'm building multi-agent orchestration systems on AWS using [Amazon Bedrock](https://aws.amazon.com/bedrock/) and [Strands Agents SDK](https://github.com/strands-agents/sdk-python) – designing how specialized AI agents collaborate to solve complex problems.
 
-My technology journey has taken me from assembler through Java, JavaScript, Go, and now primarily Python — which has become the lingua franca of the AI agent ecosystem. I still care deeply about the same things I always have: finding the actual problem and solving it with the simplest, most effective approach possible.
+The language path went from assembler through Java, JavaScript, Go, and now primarily Python, which is where the AI agent ecosystem lives. The things I care about haven't changed: find the actual problem, solve it with the simplest effective approach.
 
-On the people side, I continue to invest in coaching and mentoring engineers, increasing communication and feedback loops, and figuring out what makes teams work well — especially as AI agents become part of the team.
+On the people side, I coach and mentor engineers, push for shorter feedback loops, and try to figure out what makes teams work well – especially as AI agents become part of the team.
 
-Previously I spent years deep in containerization and microservices (you can see the evidence in this blog's archives), then cloud-native architecture with Kubernetes, Istio, and serverless on AWS. That foundation in distributed systems and service orchestration maps surprisingly well to designing multi-agent AI systems.
+The blog archives are full of containerization, microservices, Kubernetes, Istio, and serverless on AWS. That background in distributed systems and service orchestration turns out to be directly useful when designing multi-agent AI systems.
 
-I'm always happy to connect — reach out if you're working on agentic AI, multi-agent systems, or navigating the shift from traditional architecture to AI-native design.
+If you're working on agentic AI, multi-agent systems, or moving from traditional architecture to AI-native design – reach out.
