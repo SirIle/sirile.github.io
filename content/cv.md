@@ -22,9 +22,9 @@ Helsinki, Finland · ilkka.anttonen@gmail.com · [LinkedIn](https://www.linkedin
 
 ## Profile
 
-I've spent 27+ years building software and leading the people who build it, starting with assembler on a Commodore 64, through enterprise Java, pioneering Docker microcontainers before most people had heard of containers, and now designing multi-agent AI systems on AWS. The thread through all of it: find the actual problem, solve it with the simplest effective approach, and bring the team along.
+I build software and lead the people who build it. The path started with assembler on a Commodore 64, went through enterprise Java and early Docker adoption, and now I'm designing multi-agent AI systems on AWS. The constant: find the actual problem, solve it with the simplest effective approach, and bring the team along.
 
-I've been CTO of a SaaS company, led architecture teams across 40M€+ programs at Accenture, and I still write code because I believe leaders who lose touch with the technology make worse decisions. Agentic AI is transforming how organizations work, and it needs people who understand both the tech and the humans using it. That's where I operate best.
+I've been CTO of a SaaS company, led architecture teams across 40M€+ programs at Accenture, and I still write code because leaders who lose touch with the technology make worse decisions. Agentic AI is transforming how organizations work, and it needs people who understand both the tech and the humans using it.
 
 ---
 
@@ -43,7 +43,7 @@ Joined as the first AWS Professional Services consultant in Finland. I help some
 ### Vastuu Group Oy – Chief Technology Officer
 *Helsinki, Finland · 2021–2024*
 
-Took on the challenge of resetting a mid-sized SaaS company's (18M€ revenue) technology direction. Software development had been outsourced and the engineering culture had gone with it; my job was to bring both back, working with a small team and startup-level urgency to set the company up for an AI-enabled future.
+Joined as a mid-sized SaaS company's (18M€ revenue) CTO to reset the technology direction. Software development had been outsourced and the engineering culture had gone with it; my job was to bring both back, working with a small team and startup-level urgency to set the company up for an AI-enabled future.
 
 - Created and implemented the IT strategy and technology roadmap from scratch
 - Rebuilt the in-house engineering culture after years of outsourced development
