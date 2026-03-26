@@ -28,7 +28,7 @@ These limitations pushed me to look for better patterns. I've ended up trying th
 
 ## Model 1: Coordinator (hub and spoke)
 
-The first approach is the most intuitive. A coordinator agent sits in the middle and tags other agents who respond in a shared conversation. Think of it as a group chat with a moderator.
+The first approach is the most intuitive. A coordinator agent sits in the middle and tags other agents who respond in a shared conversation – basically a group chat with a moderator.
 
 The coordinator assigns tasks, agents report back, and the conversation thread becomes the shared context. It works, and the traceability is excellent – you can read the conversation and understand exactly what happened and why.
 

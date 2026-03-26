@@ -17,11 +17,6 @@
 /* Body font: Inter */
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    color: var(--text-light);
-}
-
-.dark body {
-    color: var(--text-dark);
 }
 
 /* Monospace headings — the signature */
@@ -132,4 +127,13 @@ th {
 .cv-page table {
     width: 100%;
     font-size: 0.9em;
+}
+
+/* TOC header visibility in dark mode */
+.dark .toc details summary {
+    color: var(--text-dark);
+}
+
+.dark .toc .details {
+    color: var(--text-dark);
 }

@@ -91,11 +91,11 @@ I needed a complex, open-ended scenario to push the system. Software development
 
 A D&D session requires:
 
-- **State management** – character stats, inventory, world state, combat positions
-- **Turn-based coordination** – initiative order, action resolution, reactions
-- **Creative collaboration** – the DM improvises, players make unexpected choices
-- **Persistent memory** – what happened three sessions ago matters today
-- **Multiple views** – a story narrative view for exploration, a tactical battle map for combat, character sheets for reference
+- State management – character stats, inventory, world state, combat positions
+- Turn-based coordination – initiative order, action resolution, reactions
+- Creative collaboration – the DM improvises, players make unexpected choices
+- Persistent memory – what happened three sessions ago matters today
+- Multiple views – a story narrative for exploration, a tactical battle map for combat, character sheets for reference
 
 The system now has a coordinator who acts as DM, a player agent (Elena, playing a half-elf ranger named Lyra), and me as another player. The DM manages combat with tools for initiative tracking, damage resolution, spell range checking, and fog-of-war player views. There are themed views – a story mode for narrative scenes and a battle view with widgets showing the map, initiative order, and party HP.
 
@@ -196,11 +196,11 @@ Keep the coordinator's prompt lean. A coordinator with a 4000-token system promp
 
 ## The stack
 
-- **AI:** Amazon Bedrock (Claude Opus for coordinator, Sonnet for other agents) via Strands Agents SDK
-- **Backend:** Python, FastAPI, SQLAlchemy, SQLite
-- **Frontend:** SvelteKit with themed views
-- **Bridge:** MCP over stdio, liaison agent pattern
-- **Infrastructure:** Terraform for IAM, local-first development
+- AI: Amazon Bedrock (Claude Opus for coordinator, Sonnet for other agents) via Strands Agents SDK
+- Backend: Python, FastAPI, SQLAlchemy, SQLite
+- Frontend: SvelteKit with themed views
+- Bridge: MCP over stdio, liaison agent pattern
+- Infrastructure: Terraform for IAM, local-first development
 
 ## What's next
 
