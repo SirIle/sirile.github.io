@@ -6,9 +6,9 @@ tags: ["ai", "agents", "multi-agent", "kiro", "python", "tui"]
 ShowToc: true
 TocOpen: false
 cover:
-    image: "images/ai-team/tui-dashboard.png"
-    alt: "AI-team TUI dashboard showing agents working in parallel"
-    caption: "The ai-team dashboard – 883 beads done, 5 running in parallel"
+    image: "images/ai-team/hero.png"
+    alt: "Robot team working at desks with a network diagram on the whiteboard"
+    caption: ""
 ---
 
 I wanted to see what happens when you give a team of AI agents a codebase and let them work on it with minimal supervision. Not a demo with three tasks, but a real, ongoing development project running for weeks.
