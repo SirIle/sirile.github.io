@@ -41,6 +41,8 @@ The task model is inspired by Steve Yegge's [beads](https://github.com/steveyegg
 
 Beads have dependencies – a test bead is blocked until its implement bead completes. The scheduler respects these automatically and runs independent beads in parallel. The dashboard shows the current state: ready, running, blocked, done.
 
+![The ai-team TUI dashboard – agents working in parallel, bead board, stats, and chat panel](/images/ai-team/tui-dashboard.png)
+
 The bead model also solves a problem I hit with every agent-to-agent communication framework I evaluated: they're all kludgy. Direct message passing between agents creates tight coupling and coordination overhead. With beads, agents don't talk to each other at all – they communicate through the linked bead graph. A builder completes a bead, a review bead gets unblocked, the reviewer picks it up. The "conversation" is the chain of beads and their outputs, not a chat thread.
 
 ## Git worktrees: how agents don't step on each other
