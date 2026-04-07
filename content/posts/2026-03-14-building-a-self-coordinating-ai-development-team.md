@@ -141,3 +141,5 @@ It's not fully autonomous – I still set direction, review the overall architec
 ---
 
 *This is a personal project, not yet open source. If you're building multi-agent development systems or have thoughts on the approach, I'd like to hear about it – find me on [LinkedIn](https://www.linkedin.com/in/ilkka-anttonen) or [Bluesky](https://bsky.app/profile/sirile.bsky.social).*
+
+*Update: [Part 2 is out](/posts/2026-04-07-what-2000-beads-taught-me-about-multi-agent-development/) – what happened after 3,400 beads, including SQLite corruption from laptop sleep, prompt auto-tuning, and a roguelike easter egg.*
