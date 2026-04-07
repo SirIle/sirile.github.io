@@ -2,7 +2,8 @@ baseURL = "https://sirile.github.io/"
 languageCode = "en-us"
 title = "Musings about technology"
 theme = "PaperMod"
-paginate = 10
+[pagination]
+  pagerSize = 10
 enableRobotsTXT = true
 
 [params]
