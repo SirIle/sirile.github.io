@@ -32,7 +32,7 @@ The plumbing, kept to one paragraph as promised: the model runs on a g6e.xlarge 
 
 ## The harder problem: the same face twice
 
-Style consistency turned out to be the easy half. My D&D campaign project (the same multi-agent setup from the [ai-team posts](/posts/2026-03-14-building-a-self-coordinating-ai-development-team/)) has recurring heroes, and they need to look like themselves across every scene: portraits, battle maps, standees. Prompting cannot do that. You can pin the wardrobe in words – silver braids, blue dress, white cloak – but the face underneath changes actors every time.
+Style consistency turned out to be the easy half. My [D&D campaign project](/posts/2026-03-02-agent-team-what-happens-when-ai-agents-work-together/) has recurring heroes, and they need to look like themselves across every scene: portraits, battle maps, standees. Prompting cannot do that. You can pin the wardrobe in words – silver braids, blue dress, white cloak – but the face underneath changes actors every time.
 
 Here is what sixty attempts at the same elf look like:
 
@@ -110,4 +110,4 @@ The part I keep coming back to isn't the cost, though. It's that every keeper in
 
 ---
 
-*The multi-agent system that built the picker, ordered the ear re-shoot, and ran the training is the same one from [Building a self-coordinating AI development team](/posts/2026-03-14-building-a-self-coordinating-ai-development-team/). Find me on [LinkedIn](https://www.linkedin.com/in/ilkka-anttonen) or [Bluesky](https://bsky.app/profile/sirile.bsky.social).*
+*The heroes belong to the [agent-team D&D world](/posts/2026-03-02-agent-team-what-happens-when-ai-agents-work-together/); the picker, the ear re-shoot, and the training runs were driven by the same agents as in [Building a self-coordinating AI development team](/posts/2026-03-14-building-a-self-coordinating-ai-development-team/). Find me on [LinkedIn](https://www.linkedin.com/in/ilkka-anttonen) or [Bluesky](https://bsky.app/profile/sirile.bsky.social).*
