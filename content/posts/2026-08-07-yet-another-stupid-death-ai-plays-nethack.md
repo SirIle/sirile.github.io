@@ -7,8 +7,9 @@ ShowToc: true
 TocOpen: false
 cover:
     image: "images/nethackai/hero.png"
+    variants: ["images/nethackai/hero.png", "images/nethackai/hero-krea.png"]
     alt: "A robot playing a dungeon crawler on an old terminal while a smaller robot watches from the side"
-    caption: "The strategist at work. The small one is waiting for its turn – more on that in a future post."
+    caption: "The strategist at work. The small one is waiting for its turn – more on that in a future post. Reload the page and a different artist may have drawn this scene."
 ---
 
 Some recent deaths from my project logs:
