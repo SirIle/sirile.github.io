@@ -1,3 +1,4 @@
 .kiro/
 public/
 ._*
+.DS_Store
